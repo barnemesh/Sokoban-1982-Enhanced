@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 747a21452e5397f428ef8b73a1723b68
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 12
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Px437 DOS/V re. JPN12
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: bf09aa45a73600e47b4b834e48924647, type: 3}
+  customCharacters: 
+  fontRenderingMode: 2
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
