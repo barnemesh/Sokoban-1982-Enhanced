@@ -111,7 +111,7 @@ public class PlayerControl : MonoBehaviour
         }
 
         if ( hit.collider == null ) _moving = true;
-
+        print(hit.collider);
         // Count movements
         if ( _moving ) GameManager.MoveCounter++;
     }
