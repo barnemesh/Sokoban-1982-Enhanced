@@ -10,45 +10,24 @@ public class PlayerControl : MonoBehaviour
 
     public enum MovementDirection
     {
-        Up, Down, Left, Right
+        Up,
+        Down,
+        Left,
+        Right
     }
-
-    #endregion
-    
-    #region Properties
-
-    /**
-     * Is movement Paused?
-     */
-    public bool Pause { get; set; }
 
     #endregion
 
 
     #region Inspector
-    
+
     [SerializeField]
     [Tooltip("How many updates should a single movement take")]
     private float updatesCountInMovement = 4.0f;
 
     // todo: Idle sprite to mark current active.
-    /// <summary>
-    ///     Struct to keep the sprites - just to be able to create a list with named elements
-    /// </summary>
-    [Serializable]
-    public struct Sprites
-    {
-        public Sprite up;
-        public Sprite down;
-        public Sprite left;
-        public Sprite right;
-    }
-
     [SerializeField]
-    private Sprites sprites;
-
-    [SerializeField]
-    private SpriteRenderer mySpriteRenderer;
+    private Animator animator;
 
     [SerializeField]
     private Rigidbody2D myRigidbody;
@@ -62,7 +41,7 @@ public class PlayerControl : MonoBehaviour
     private Vector2 _lastPosition;
     private bool _moving;
     private float _distancePercentage;
-    public Animator _animator;
+    private int _animatorHash;
 
     #endregion
 
@@ -71,7 +50,7 @@ public class PlayerControl : MonoBehaviour
 
     public void ToggleIdle ()
     {
-        _animator.SetTrigger("Idle");
+        animator.SetInteger(_animatorHash, -animator.GetInteger(_animatorHash));
     }
 
     public void SetMovement (MovementDirection direction)
@@ -81,26 +60,26 @@ public class PlayerControl : MonoBehaviour
 
         switch (direction)
         {
-            case MovementDirection.Left: 
-                mySpriteRenderer.sprite = sprites.left;
+            case MovementDirection.Left:
+                animator.SetInteger(_animatorHash, 1);
                 _targetDirection = Vector2.left;
                 break;
             case MovementDirection.Up:
-                mySpriteRenderer.sprite = sprites.up;
+                animator.SetInteger(_animatorHash, 2);
                 _targetDirection = Vector2.up;
                 break;
             case MovementDirection.Down:
-                mySpriteRenderer.sprite = sprites.down;
+                animator.SetInteger(_animatorHash, 3);
                 _targetDirection = Vector2.down;
                 break;
             case MovementDirection.Right:
-                mySpriteRenderer.sprite = sprites.right;
+                animator.SetInteger(_animatorHash, 4);
                 _targetDirection = Vector2.right;
                 break;
             default:
                 return;
         }
-        
+
 
         // if we need to move - check if we can move in the desired direction.
 
@@ -114,7 +93,7 @@ public class PlayerControl : MonoBehaviour
 
             _moving = true;
         }
-        
+
         if ( hit.collider == null ) _moving = true;
 
         // Count movements
@@ -126,12 +105,11 @@ public class PlayerControl : MonoBehaviour
 
     #region Monobehaviour
 
-    private void Start ()
+    private void Awake ()
     {
-        _animator = GetComponent<Animator>();
-        print(_animator.gameObject.transform.position);
+        _animatorHash = Animator.StringToHash("Direction");
         _lastPosition = myRigidbody.position;
-        GameManager.PlayerList.Add(this);  // register this player as active
+        GameManager.PlayerList.Add(this); // register this player as active
     }
 
     private void FixedUpdate ()
@@ -151,6 +129,18 @@ public class PlayerControl : MonoBehaviour
         _distancePercentage = 0;
         _lastPosition += _targetDirection;
         _moving = false;
+    }
+
+    private void OnTriggerEnter2D (Collider2D other)
+    {
+        // When a box reaches a target - mark that target as complete
+        if ( other.CompareTag("Door") ) GameManager.DoorCounter++;
+    }
+
+    private void OnTriggerExit2D (Collider2D other)
+    {
+        // When a box leaves a target - mark that target as not complete
+        if ( other.CompareTag("Door") ) GameManager.DoorCounter--;
     }
 
     #endregion

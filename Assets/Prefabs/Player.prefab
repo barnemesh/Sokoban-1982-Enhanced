@@ -119,14 +119,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   updatesCountInMovement: 4
-  sprites:
-    up: {fileID: -7061961827533527962, guid: 86af50bdaa5f9914693872c5995796b0, type: 3}
-    down: {fileID: -4541695534731880313, guid: 86af50bdaa5f9914693872c5995796b0, type: 3}
-    left: {fileID: -2431253098852522738, guid: 86af50bdaa5f9914693872c5995796b0, type: 3}
-    right: {fileID: 5026186521847466805, guid: 86af50bdaa5f9914693872c5995796b0, type: 3}
-  mySpriteRenderer: {fileID: 68871756193846777}
+  animator: {fileID: 6900381625046927187}
   myRigidbody: {fileID: 68871756193846779}
-  _animator: {fileID: 6900381625046927187}
 --- !u!50 &68871756193846779
 Rigidbody2D:
   serializedVersion: 4
@@ -172,5 +166,5 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.9, y: 0.9}
   m_EdgeRadius: 0

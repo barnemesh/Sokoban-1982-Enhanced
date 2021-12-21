@@ -1,43 +1,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Scriptable_Objects;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// Static Game Manager - data and changes UI and scenes as required
 /// </summary>
 public static class GameManager
 {
-    #region Private Variables
 
+    #region Private Variables
+    
     private const string ScoreFormat = "Moves: {0,7}  Resets: {1,1}";
-    private static bool _levelWon;
 
     private static int _resets;
     private static int _currentLevel;
-    private static int _targetCounter;
     private static int _movesInLevel;
+    private static int _inDoor;
 
     private static GameObject _winText;
     private static GameObject _lostText;
     private static GameObject _resetText;
 
     private static GameObject _activeText;
-    private static AvatarsControl _activeAvatarsControl;
     private static int _currentPlayer;
+    private static TextMeshProUGUI _scoreText;
+    private static TextMeshProUGUI _messagesText;
+    private static UITexts _uiTexts;
 
     #endregion
 
 
     #region Properties
+
+    public static bool LevelWon { get; private set; }
     
-    /// <summary>
-    /// If Exists - Text to show move count and reset count.
-    /// Does not exist in the original game - but is here to show possibilities.
-    /// </summary>
-    public static TextMeshProUGUI ScoreText { get; set; }
 
     /// <summary>
     /// Maximum number of resets per level. Public to allow future improvements for levels with more or less resets,
@@ -53,39 +54,32 @@ public static class GameManager
         get => _movesInLevel;
         set
         {
-            if (_levelWon) return;
+            if(LevelWon) return;
             _movesInLevel = value;
             UpdateScore();
+        } 
+    }
+    
+    public static int DoorCounter
+    {
+        get => _inDoor;
+        set
+        {
+            _inDoor = value;
+            LevelWon = _inDoor == PlayerList.Count;
         } 
     }
 
     /// <summary>
     /// Counter for the number of targets that have no boxes on them in the current level.
     /// </summary>
-    public static int TargetCounter
-    {
-        get => _targetCounter;
-        set
-        {
-            _targetCounter = value;
-            _levelWon = _targetCounter == 0;
-        }
-    }
+    public static int TargetCounter { get; set; }
 
     /// <summary>
     /// The AvatarController in the current level.
     /// </summary>
-    public static AvatarsControl AvatarController
-    {
-        get => _activeAvatarsControl;
-        set
-        {
-            _activeAvatarsControl = value;
-            _levelWon = false;
-            MoveCounter = 0;
-        }
-    }
-    
+    public static AvatarsControl AvatarController { get; set; }
+
     public static List<PlayerControl> PlayerList { get; } = new List<PlayerControl>();
 
     #endregion
@@ -95,16 +89,14 @@ public static class GameManager
     /// <summary>
     /// Set the UI texts used in the current level.
     /// </summary>
-    /// <param name="winText"> Text to display after level was won.</param>
-    /// <param name="lostText"> Text to display when reached max resets for the level.</param>
-    /// <param name="resetText"> Text to display when the level isn't won yet, and max resets wasn't reached.</param>
-    public static void SetTexts (GameObject winText, GameObject lostText, GameObject resetText)
+    /// <param name="messagesText"></param>
+    /// <param name="scoreText"></param>
+    public static void SetTexts (TextMeshProUGUI messagesText, TextMeshProUGUI scoreText, UITexts uiTexts)
     {
         DeactivateText();
-        _winText = winText;
-        _lostText = lostText;
-        _resetText = resetText;
-        // todo: set score texts
+        _uiTexts = uiTexts;
+        _messagesText = messagesText;
+        _scoreText = scoreText;
     }
     
     /// <summary>
@@ -123,8 +115,6 @@ public static class GameManager
     public static void SetLevel (int levelNumber)
     {
         _resets = levelNumber == _currentLevel ? _resets + 1 : 0;
-        TargetCounter = 0;
-        _levelWon = false;
         _currentLevel = levelNumber;
         UpdateScore(); // todo: refactor player resets and this?
     }
@@ -140,8 +130,12 @@ public static class GameManager
     public static void SwitchToTargetScene ()
     {
         DeactivateText();
+        int targetScene = GetTargetScene();
         PlayerList.Clear();
-        SceneManager.LoadScene(GetTargetScene());
+        _inDoor = 0;
+        TargetCounter = 0;
+        _movesInLevel = 0;
+        SceneManager.LoadScene(targetScene);
     }
 
     /// <summary>
@@ -149,14 +143,12 @@ public static class GameManager
     /// </summary>
     public static void ActivateText ()
     {
+        // todo: use GetTargetScene
         DeactivateText();
-        _activeText = TargetCounter switch
-        {
-            0 => _winText,
-            _ => _resets >= MaxResets ? _lostText : _resetText
-        };
-
-        _activeText.SetActive(true);
+        if ( DoorCounter == PlayerList.Count )
+            _messagesText.text = _uiTexts.winText;
+        else
+            _messagesText.text = _resets >= MaxResets ? _uiTexts.loseText : _uiTexts.resetText;
     }
 
     /// <summary>
@@ -164,11 +156,7 @@ public static class GameManager
     /// </summary>
     public static void DeactivateText ()
     {
-        if ( _activeText == null )
-            return;
-
-        _activeText.SetActive(false);
-        _activeText = null;
+        _messagesText.text = "";
     }
 
     #endregion
@@ -182,11 +170,11 @@ public static class GameManager
     /// <returns> NUmber of scene to load</returns>
     private static int GetTargetScene ()
     {
-        return TargetCounter switch
-        {
-            0 => (_currentLevel + 1) % SceneManager.sceneCountInBuildSettings,
-            _ => _resets >= MaxResets ? 0 : _currentLevel
-        };
+        Debug.Log(DoorCounter);
+        Debug.Log(PlayerList.Count);
+        if ( DoorCounter == PlayerList.Count )
+            return (_currentLevel + 1) % SceneManager.sceneCountInBuildSettings;
+        return _resets >= MaxResets ? 0 : _currentLevel;
     }
 
     /// <summary>
@@ -195,8 +183,8 @@ public static class GameManager
     /// </summary>
     private static void UpdateScore ()
     {
-        if ( ScoreText == null ) return;
-        ScoreText.text = string.Format(ScoreFormat, _movesInLevel, MaxResets - _resets);
+        if ( _scoreText == null ) return;
+        _scoreText.text = string.Format(_uiTexts.scoreFormat, _movesInLevel, MaxResets - _resets);
     }
     #endregion
 }

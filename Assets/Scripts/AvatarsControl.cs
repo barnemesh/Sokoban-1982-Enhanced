@@ -35,6 +35,7 @@ public class AvatarsControl : MonoBehaviour
     private void Start ()
     {
         GameManager.AvatarController = this;
+        GameManager.PlayerList[_currentPlayer].ToggleIdle();
     }
 
 
@@ -45,7 +46,6 @@ public class AvatarsControl : MonoBehaviour
 
         if ( Input.GetKeyDown(KeyCode.Space) )
         {
-            Debug.Log(_currentPlayer);
             GameManager.PlayerList[_currentPlayer].ToggleIdle();
             _currentPlayer = (_currentPlayer + 1) % GameManager.PlayerList.Count;
             GameManager.PlayerList[_currentPlayer].ToggleIdle();

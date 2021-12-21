@@ -1,3 +1,4 @@
+using Scriptable_Objects;
 using Scriptable_Objects.Level_Datas;
 using TMPro;
 using UnityEngine;
@@ -6,59 +7,24 @@ using UnityEngine.Tilemaps;
 public class LevelGameManager : MonoBehaviour
 {
     #region Inspect
-    //todo: create script on the tilemap itself
-    [SerializeField]
-    private Tilemap doorsTilemap;
 
     [SerializeField]
-    private TileBase openDoor;
-
-    [SerializeField]
-    private TileBase closedDoor;
-
-    [SerializeField]
-    private AvatarsControl avatarsControl;
+    private UITexts texts;
     
     /// <summary>
     /// Text to show score. Did not exist in the original game.
     /// </summary>
     [SerializeField]
     private TextMeshProUGUI scoreText;
-    /// <summary>
-    /// Text to display when the level is won.
-    /// </summary>
+
+
     [SerializeField]
-    private GameObject winText;
-    /// <summary>
-    /// Text to display when the level is ongoing.
-    /// </summary>
-    [SerializeField]
-    private GameObject resetText;
-    /// <summary>
-    /// Text to display when last reset was reached.
-    /// </summary>
-    [SerializeField]
-    private GameObject lostText;
+    private TextMeshProUGUI messagesText;
     /// <summary>
     /// This level number.
     /// </summary>
     [SerializeField]
     private int levelNumber;
-    /// <summary>
-    /// Level Data for this level.
-    /// </summary>
-    [SerializeField]
-    private LevelData levelData;
-    /// <summary>
-    /// Box prefab for the player to push.
-    /// </summary>
-    [SerializeField]
-    private GameObject boxPrefab;
-    /// <summary>
-    /// AvatarController prefab, the controlled avatar.
-    /// </summary>
-    [SerializeField]
-    private GameObject playerPrefab;
 
     #endregion
 
@@ -75,31 +41,16 @@ public class LevelGameManager : MonoBehaviour
     private void Start ()
     {
         // Update GameManager with current level data
-        resetText.SetActive(false);
-        winText.SetActive(false);
-        lostText.SetActive(false);
-        GameManager.SetTexts(winText, lostText, resetText);
-        GameManager.ScoreText = scoreText; // todo refactor to texts
+        GameManager.SetTexts(messagesText, scoreText, texts);
         GameManager.SetLevel(levelNumber);
-        GameManager.TargetCounter = 2;
-
-        // Create player and Boxes
-        // Instantiate(playerPrefab, levelData.player, Quaternion.identity);
-        //
-        // var box = new GameObject("Boxes");
-        // foreach ( var boxPosition in levelData.boxes )
-        //     Instantiate(boxPrefab, boxPosition, Quaternion.identity, box.transform);
+        
     }
 
     private void Update ()
     {
-        if ( GameManager.TargetCounter == 0 )
-        {
-            doorsTilemap.SwapTile(closedDoor, openDoor);
-            doorsTilemap.GetComponent<TilemapCollider2D>().isTrigger = true;
-        }
+
         // Use f1 to do stuff.
-        if ( !_waitingForInput && Input.GetKeyDown(KeyCode.F1) )
+        if ( !_waitingForInput && (Input.GetKeyDown(KeyCode.F1) || GameManager.LevelWon ))
         {
             _waitingForInput = true;
             GameManager.TogglePlayerMovement();
@@ -114,7 +65,7 @@ public class LevelGameManager : MonoBehaviour
         if ( Input.GetKeyDown(KeyCode.Y) )
             GameManager.SwitchToTargetScene();
 
-        if ( Input.GetKeyDown(KeyCode.N) )
+        if ( Input.GetKeyDown(KeyCode.N) && !GameManager.LevelWon)
         {
             _waitingForInput = false;
             GameManager.TogglePlayerMovement();
