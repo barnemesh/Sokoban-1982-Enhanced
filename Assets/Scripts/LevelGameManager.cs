@@ -1,11 +1,24 @@
 using Scriptable_Objects.Level_Datas;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class LevelGameManager : MonoBehaviour
 {
-    #region Inspector
+    #region Inspect
+    //todo: create script on the tilemap itself
+    [SerializeField]
+    private Tilemap doorsTilemap;
 
+    [SerializeField]
+    private TileBase openDoor;
+
+    [SerializeField]
+    private TileBase closedDoor;
+
+    [SerializeField]
+    private AvatarsControl avatarsControl;
+    
     /// <summary>
     /// Text to show score. Did not exist in the original game.
     /// </summary>
@@ -42,7 +55,7 @@ public class LevelGameManager : MonoBehaviour
     [SerializeField]
     private GameObject boxPrefab;
     /// <summary>
-    /// Player prefab, the controlled avatar.
+    /// AvatarController prefab, the controlled avatar.
     /// </summary>
     [SerializeField]
     private GameObject playerPrefab;
@@ -52,7 +65,6 @@ public class LevelGameManager : MonoBehaviour
 
     #region Private Fields
 
-    private static int _resets;
     private bool _waitingForInput;
 
     #endregion
@@ -69,6 +81,7 @@ public class LevelGameManager : MonoBehaviour
         GameManager.SetTexts(winText, lostText, resetText);
         GameManager.ScoreText = scoreText; // todo refactor to texts
         GameManager.SetLevel(levelNumber);
+        GameManager.TargetCounter = 2;
 
         // Create player and Boxes
         // Instantiate(playerPrefab, levelData.player, Quaternion.identity);
@@ -80,6 +93,11 @@ public class LevelGameManager : MonoBehaviour
 
     private void Update ()
     {
+        if ( GameManager.TargetCounter == 0 )
+        {
+            doorsTilemap.SwapTile(closedDoor, openDoor);
+            doorsTilemap.GetComponent<TilemapCollider2D>().isTrigger = true;
+        }
         // Use f1 to do stuff.
         if ( !_waitingForInput && Input.GetKeyDown(KeyCode.F1) )
         {

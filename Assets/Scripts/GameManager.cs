@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
@@ -10,7 +12,7 @@ public static class GameManager
 {
     #region Private Variables
 
-    private const string ScoreFormat = "Moves: {0}  \t \t Resets: {1}";
+    private const string ScoreFormat = "Moves: {0,7}  Resets: {1,1}";
     private static bool _levelWon;
 
     private static int _resets;
@@ -23,8 +25,9 @@ public static class GameManager
     private static GameObject _resetText;
 
     private static GameObject _activeText;
-    private static PlayerControl _playerControl;
-    
+    private static AvatarsControl _activeAvatarsControl;
+    private static int _currentPlayer;
+
     #endregion
 
 
@@ -70,21 +73,22 @@ public static class GameManager
     }
 
     /// <summary>
-    /// The Player in the current level.
+    /// The AvatarController in the current level.
     /// </summary>
-    public static PlayerControl Player
+    public static AvatarsControl AvatarController
     {
-        get => _playerControl;
+        get => _activeAvatarsControl;
         set
         {
-            _playerControl = value;
+            _activeAvatarsControl = value;
             _levelWon = false;
             MoveCounter = 0;
         }
     }
     
-    #endregion
+    public static List<PlayerControl> PlayerList { get; } = new List<PlayerControl>();
 
+    #endregion
 
     #region Setter Methods
 
@@ -104,12 +108,12 @@ public static class GameManager
     }
     
     /// <summary>
-    /// Toggle the current Player ability to move, while UI is displayed.
+    /// Toggle the current AvatarController ability to move, while UI is displayed.
     /// </summary>
     public static void TogglePlayerMovement ()
     {
-        if ( Player != null )
-            Player.Pause = !Player.Pause;
+        if ( AvatarController != null )
+            AvatarController.Pause = !AvatarController.Pause;
     }
 
     /// <summary>
@@ -136,6 +140,7 @@ public static class GameManager
     public static void SwitchToTargetScene ()
     {
         DeactivateText();
+        PlayerList.Clear();
         SceneManager.LoadScene(GetTargetScene());
     }
 

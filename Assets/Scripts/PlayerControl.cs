@@ -2,10 +2,19 @@ using System;
 using UnityEngine;
 
 /**
- * Player avatar controller.
+ * AvatarController avatar controller.
  */
 public class PlayerControl : MonoBehaviour
 {
+    #region Enums
+
+    public enum MovementDirection
+    {
+        Up, Down, Left, Right
+    }
+
+    #endregion
+    
     #region Properties
 
     /**
@@ -17,11 +26,12 @@ public class PlayerControl : MonoBehaviour
 
 
     #region Inspector
-
+    
     [SerializeField]
     [Tooltip("How many updates should a single movement take")]
     private float updatesCountInMovement = 4.0f;
 
+    // todo: Idle sprite to mark current active.
     /// <summary>
     ///     Struct to keep the sprites - just to be able to create a list with named elements
     /// </summary>
@@ -52,50 +62,45 @@ public class PlayerControl : MonoBehaviour
     private Vector2 _lastPosition;
     private bool _moving;
     private float _distancePercentage;
+    public Animator _animator;
 
     #endregion
 
 
-    #region Monobehaviour
+    #region Public Methods
 
-    private void Start ()
+    public void ToggleIdle ()
     {
-        _lastPosition = myRigidbody.position;
-        GameManager.Player = this;  // register this player as active
+        _animator.SetTrigger("Idle");
     }
 
-    // Update is called once per frame
-    private void Update ()
+    public void SetMovement (MovementDirection direction)
     {
-        if ( Pause || _moving ) return;
+        if ( _moving )
+            return;
 
-        // Choose movement direction based on input, i not already moving.
-        _targetDirection = Vector2.zero;
-        if ( Input.GetKeyDown(KeyCode.LeftArrow) )
+        switch (direction)
         {
-            mySpriteRenderer.sprite = sprites.left;
-            _targetDirection = Vector2.left;
+            case MovementDirection.Left: 
+                mySpriteRenderer.sprite = sprites.left;
+                _targetDirection = Vector2.left;
+                break;
+            case MovementDirection.Up:
+                mySpriteRenderer.sprite = sprites.up;
+                _targetDirection = Vector2.up;
+                break;
+            case MovementDirection.Down:
+                mySpriteRenderer.sprite = sprites.down;
+                _targetDirection = Vector2.down;
+                break;
+            case MovementDirection.Right:
+                mySpriteRenderer.sprite = sprites.right;
+                _targetDirection = Vector2.right;
+                break;
+            default:
+                return;
         }
-
-        if ( Input.GetKeyDown(KeyCode.UpArrow) )
-        {
-            mySpriteRenderer.sprite = sprites.up;
-            _targetDirection = Vector2.up;
-        }
-
-        if ( Input.GetKeyDown(KeyCode.RightArrow) )
-        {
-            mySpriteRenderer.sprite = sprites.right;
-            _targetDirection = Vector2.right;
-        }
-
-        if ( Input.GetKeyDown(KeyCode.DownArrow) )
-        {
-            mySpriteRenderer.sprite = sprites.down;
-            _targetDirection = Vector2.down;
-        }
-
-        if ( _targetDirection == Vector2.zero ) return;
+        
 
         // if we need to move - check if we can move in the desired direction.
 
@@ -109,16 +114,29 @@ public class PlayerControl : MonoBehaviour
 
             _moving = true;
         }
-
+        
         if ( hit.collider == null ) _moving = true;
-        print(hit.collider);
+
         // Count movements
         if ( _moving ) GameManager.MoveCounter++;
     }
 
+    #endregion
+
+
+    #region Monobehaviour
+
+    private void Start ()
+    {
+        _animator = GetComponent<Animator>();
+        print(_animator.gameObject.transform.position);
+        _lastPosition = myRigidbody.position;
+        GameManager.PlayerList.Add(this);  // register this player as active
+    }
+
     private void FixedUpdate ()
     {
-        if ( Pause || !_moving )
+        if ( !_moving )
             return;
 
         // If we need to move, use exactly updatesCountInMovement to finish the entire movement.
