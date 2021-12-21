@@ -2286,6 +2286,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1551311490}
     - target: {fileID: 643425666656208196, guid: 9f81747c73a3f3c48adcb4d9e95612d2, type: 3}
+      propertyPath: messagesText
+      value: 
+      objectReference: {fileID: 1770589358}
+    - target: {fileID: 643425666656208196, guid: 9f81747c73a3f3c48adcb4d9e95612d2, type: 3}
       propertyPath: avatarsControl
       value: 
       objectReference: {fileID: 1752691522}

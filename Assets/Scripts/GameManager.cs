@@ -93,7 +93,6 @@ public static class GameManager
     /// <param name="scoreText"></param>
     public static void SetTexts (TextMeshProUGUI messagesText, TextMeshProUGUI scoreText, UITexts uiTexts)
     {
-        DeactivateText();
         _uiTexts = uiTexts;
         _messagesText = messagesText;
         _scoreText = scoreText;
@@ -116,6 +115,7 @@ public static class GameManager
     {
         _resets = levelNumber == _currentLevel ? _resets + 1 : 0;
         _currentLevel = levelNumber;
+        LevelWon = false;
         UpdateScore(); // todo: refactor player resets and this?
     }
 
