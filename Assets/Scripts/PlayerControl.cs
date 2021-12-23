@@ -133,13 +133,15 @@ public class PlayerControl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // When a box reaches a target - mark that target as complete
-        if (other.CompareTag("Door")) GameManager.DoorCounter++;
+        if (other.CompareTag("Door")) 
+            GameManager.DoorCounter++;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         // When a box leaves a target - mark that target as not complete
-        if (other.CompareTag("Door")) GameManager.DoorCounter--;
+        if (other.CompareTag("Door")) 
+            GameManager.DoorCounter--;
     }
 
     #endregion
