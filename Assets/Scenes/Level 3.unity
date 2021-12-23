@@ -269,7 +269,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.35
+  m_fontSize: 40.35
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1385,8 +1385,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 572427056}
-  - {fileID: 1256625437}
   - {fileID: 1162203466}
+  - {fileID: 1256625437}
   - {fileID: 280632310}
   m_Father: {fileID: 1616012565}
   m_RootOrder: 3
@@ -1983,6 +1983,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b397570373333cb4780ddb76ad710742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatarMarker: {fileID: 0}
+  statePanel: {fileID: 0}
 --- !u!4 &1752691523
 Transform:
   m_ObjectHideFlags: 0
@@ -2208,7 +2210,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -1730415933
+  m_SortingLayerID: -2146027101
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1778167340
@@ -2273,7 +2275,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 138f961748a1a5649a1749df97e6dfa8, type: 2}
     - target: {fileID: 643425666656208196, guid: 9f81747c73a3f3c48adcb4d9e95612d2, type: 3}
       propertyPath: levelNumber
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 643425666656208196, guid: 9f81747c73a3f3c48adcb4d9e95612d2, type: 3}
       propertyPath: doorsTilemap

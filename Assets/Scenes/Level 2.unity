@@ -269,7 +269,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 27.35
+  m_fontSize: 40.35
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1230,6 +1230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b397570373333cb4780ddb76ad710742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  avatarMarker: {fileID: 0}
+  statePanel: {fileID: 0}
 --- !u!4 &1752691523
 Transform:
   m_ObjectHideFlags: 0
@@ -1455,7 +1457,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_SortingLayerID: -1730415933
+  m_SortingLayerID: -2146027101
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!224 &1778167340

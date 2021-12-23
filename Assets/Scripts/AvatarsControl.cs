@@ -1,8 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class AvatarsControl : MonoBehaviour
 {
@@ -38,52 +34,48 @@ public class AvatarsControl : MonoBehaviour
 
     #region Monobehaviour
 
-    private void Start ()
+    private void Start()
     {
         GameManager.AvatarController = this;
-        for ( int i = 0; i < GameManager.PlayerList.Count; i++ )
+
+        if (avatarMarker != null)
         {
-            Instantiate(avatarMarker, statePanel.transform);
+            for (var i = 0; i < GameManager.PlayerList.Count; i++)
+            {
+                Instantiate(avatarMarker, statePanel.transform);
+            }
         }
+
+
         GameManager.PlayerList[CurrentPlayer].ToggleIdle();
-        
     }
 
 
     // Update is called once per frame
-    private void Update ()
+    private void Update()
     {
-        if ( Pause || _moving ) return;
+        if (Pause || _moving) return;
 
-        if ( Input.GetKeyDown(KeyCode.Space) )
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             GameManager.PlayerList[CurrentPlayer].ToggleIdle();
             CurrentPlayer = (CurrentPlayer + 1) % GameManager.PlayerList.Count;
             GameManager.PlayerList[CurrentPlayer].ToggleIdle();
         }
-        
+
         // Choose movement direction based on input, i not already moving.
-        if ( Input.GetKeyDown(KeyCode.LeftArrow) )
-        {
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
             GameManager.PlayerList[CurrentPlayer].SetMovement(PlayerControl.MovementDirection.Left);
-        }
 
-        if ( Input.GetKeyDown(KeyCode.UpArrow) )
-        {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
             GameManager.PlayerList[CurrentPlayer].SetMovement(PlayerControl.MovementDirection.Up);
-        }
 
-        if ( Input.GetKeyDown(KeyCode.RightArrow) )
-        {
+        if (Input.GetKeyDown(KeyCode.RightArrow))
             GameManager.PlayerList[CurrentPlayer].SetMovement(PlayerControl.MovementDirection.Right);
-        }
 
-        if ( Input.GetKeyDown(KeyCode.DownArrow) )
-        {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
             GameManager.PlayerList[CurrentPlayer].SetMovement(PlayerControl.MovementDirection.Down);
-        }
     }
-    
-    
+
     #endregion
 }

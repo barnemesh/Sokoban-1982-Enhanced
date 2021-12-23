@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 namespace Scriptable_Objects
@@ -8,10 +7,13 @@ namespace Scriptable_Objects
     {
         [TextArea]
         public string winText;
+
         [TextArea]
         public string loseText;
+
         [TextArea]
         public string resetText;
+
         [TextArea]
         public string scoreFormat;
     }

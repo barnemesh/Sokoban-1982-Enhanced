@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Scriptable_Objects.Level_Datas
 {
     /// <summary>
-    /// Hold the data for the player and boxes position for a given level
+    ///     Hold the data for the player and boxes position for a given level
     /// </summary>
     [CreateAssetMenu]
     public class LevelData : ScriptableObject
