@@ -5,8 +5,20 @@ using UnityEngine;
  */
 public class PlayerControl : MonoBehaviour
 {
+    #region Static Constants
+
+    /// <summary>
+    /// Hash of the animators integer condition for movement directions.
+    /// </summary>
+    private static readonly int DirectionHash = Animator.StringToHash("Direction");
+
+    #endregion
+    
     #region Enums
 
+    /// <summary>
+    /// enum to indicate movement direction.
+    /// </summary>
     public enum MovementDirection
     {
         Up,
@@ -24,11 +36,12 @@ public class PlayerControl : MonoBehaviour
     [Tooltip("How many updates should a single movement take")]
     private float updatesCountInMovement = 4.0f;
 
-    // todo: Idle sprite to mark current active.
     [SerializeField]
+    [Tooltip("This objects animator")]
     private Animator animator;
 
     [SerializeField]
+    [Tooltip("This objects rigidbody")]
     private Rigidbody2D myRigidbody;
 
     #endregion
@@ -36,51 +49,69 @@ public class PlayerControl : MonoBehaviour
 
     #region Private Fields
 
+    /// <summary>
+    /// Target direction to move to.
+    /// </summary>
     private Vector2 _targetDirection;
+
+    /// <summary>
+    /// Position before movement started
+    /// </summary>
     private Vector2 _lastPosition;
+
+    /// <summary>
+    /// Is the avatar moving currently?
+    /// </summary>
     private bool _moving;
+
+    /// <summary>
+    /// Percentage of movement complete.
+    /// </summary>
     private float _distancePercentage;
-    private int _animatorHash;
 
     #endregion
 
 
     #region Public Methods
 
+    /// <summary>
+    /// Set the Idle animation, indicating this avatar is active.
+    /// </summary>
+    /// <param name="state"> the desired state</param>
     public void SetActiveAnimation(bool state)
     {
-        animator.SetInteger(_animatorHash, state ? -4 : 4);
-    }
-    public void ToggleIdle()
-    {
-        animator.SetInteger(_animatorHash, -animator.GetInteger(_animatorHash));
+        animator.SetInteger(DirectionHash, state ? -4 : 4);
     }
 
-    public void SetMovement(MovementDirection direction)
+    /// <summary>
+    /// Start moving in the given direction, if possible.
+    /// </summary>
+    /// <param name="direction"></param>
+    public bool SetMovement(MovementDirection direction)
     {
         if (_moving)
-            return;
+            return false;
 
         switch (direction)
         {
             case MovementDirection.Left:
-                animator.SetInteger(_animatorHash, 1);
+                animator.SetInteger(DirectionHash, 1);
                 _targetDirection = Vector2.left;
                 break;
             case MovementDirection.Up:
-                animator.SetInteger(_animatorHash, 2);
+                animator.SetInteger(DirectionHash, 2);
                 _targetDirection = Vector2.up;
                 break;
             case MovementDirection.Down:
-                animator.SetInteger(_animatorHash, 3);
+                animator.SetInteger(DirectionHash, 3);
                 _targetDirection = Vector2.down;
                 break;
             case MovementDirection.Right:
-                animator.SetInteger(_animatorHash, 4);
+                animator.SetInteger(DirectionHash, 4);
                 _targetDirection = Vector2.right;
                 break;
             default:
-                return;
+                return false;
         }
 
 
@@ -92,15 +123,19 @@ public class PlayerControl : MonoBehaviour
         if (hit.collider != null && hit.collider.CompareTag("Box"))
         {
             var boxControl = hit.collider.GetComponent<BoxControl>();
-            if (!boxControl.TryToMoveInDirection(_targetDirection)) return;
+            if (!boxControl.TryToMoveInDirection(_targetDirection))
+                return false;
 
             _moving = true;
         }
 
-        if (hit.collider == null) _moving = true;
+        if (hit.collider == null)
+            _moving = true;
 
         // Count movements
-        if (_moving) GameManager.MoveCounter++;
+        if (_moving)
+            GameManager.MoveCounter++;
+        return _moving;
     }
 
     #endregion
@@ -110,7 +145,6 @@ public class PlayerControl : MonoBehaviour
 
     private void Awake()
     {
-        _animatorHash = Animator.StringToHash("Direction");
         _lastPosition = myRigidbody.position;
         GameManager.PlayerList.Add(this); // register this player as active
         SetActiveAnimation(false);
@@ -137,15 +171,15 @@ public class PlayerControl : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // When a box reaches a target - mark that target as complete
-        if (other.CompareTag("Door")) 
+        // When an avatar reaches a door - mark that door as entered
+        if (other.CompareTag("Door"))
             GameManager.DoorCounter++;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        // When a box leaves a target - mark that target as not complete
-        if (other.CompareTag("Door")) 
+        // When an avatar leaves a door - mark that door as empty
+        if (other.CompareTag("Door"))
             GameManager.DoorCounter--;
     }
 

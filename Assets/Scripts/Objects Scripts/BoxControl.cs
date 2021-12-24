@@ -17,22 +17,21 @@ public class BoxControl : MonoBehaviour
     /// <returns>true if moved, false o.w</returns>
     public bool TryToMoveInDirection(Vector2 direction)
     {
-        if (_moving) return false;
+        if (_moving) 
+            return false;
 
         var hit = Physics2D.Raycast(myRigidbody.position, direction, 1.0f);
-        if (hit.collider == null)
-        {
-            _targetDirection = direction;
-            _moving = true;
-            return true;
-        }
+        if (hit.collider != null) 
+            return false;
+        
+        _targetDirection = direction;
+        _moving = true;
+        return true;
 
-        return false;
     }
 
     #endregion
-
-
+    
     #region Inspector
 
     [SerializeField]
@@ -40,20 +39,34 @@ public class BoxControl : MonoBehaviour
     private float updatesCountInMovement = 4.0f;
 
     [SerializeField]
+    [Tooltip("This objects rigidbody.")]
     private Rigidbody2D myRigidbody;
 
     #endregion
-
-
+    
     #region Private Fields
 
+    /// <summary>
+    /// Target direction to move to.
+    /// </summary>
     private Vector2 _targetDirection;
-    private bool _moving;
+
+    /// <summary>
+    /// Position before movement started
+    /// </summary>
     private Vector2 _lastPosition;
+
+    /// <summary>
+    /// Is the avatar moving currently?
+    /// </summary>
+    private bool _moving;
+
+    /// <summary>
+    /// Percentage of movement complete.
+    /// </summary>
     private float _distancePercentage;
 
     #endregion
-
 
     #region Monobehaviour
 

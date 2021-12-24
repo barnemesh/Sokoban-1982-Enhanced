@@ -2,37 +2,41 @@ using Scriptable_Objects;
 using TMPro;
 using UnityEngine;
 
+/// <summary>
+/// Manager of a single level in the game.
+/// </summary>
 public class LevelGameManager : MonoBehaviour
 {
     #region Private Fields
 
+    /// <summary>
+    /// Is the game waiting for input?
+    /// </summary>
     private bool _waitingForInput;
 
     #endregion
 
-    #region Inspect
+    #region Inspector
 
     [SerializeField]
+    [Tooltip("UITexts objects that hold the texts and formats for this level.")]
     private UITexts texts;
-
-    /// <summary>
-    ///     Text to show score. Did not exist in the original game.
-    /// </summary>
+    
     [SerializeField]
+    [Tooltip("Text to show score")]
     private TextMeshProUGUI scoreText;
 
 
     [SerializeField]
+    [Tooltip("Text to show any message to user.")]
     private TextMeshProUGUI messagesText;
 
-    /// <summary> TODO: Use scene number instead?
-    ///     This level number.
-    /// </summary>
+    // TODO: Use scene number instead?
     [SerializeField]
+    [Tooltip("This level number.")]
     private int levelNumber;
 
     #endregion
-
 
     #region Monobehaviour
 

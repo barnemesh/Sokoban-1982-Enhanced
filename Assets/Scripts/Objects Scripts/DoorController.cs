@@ -1,15 +1,26 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+/// <summary>
+/// Manage opening and closing doors in a Tilemap
+/// </summary>
 public class DoorController : MonoBehaviour
 {
     [SerializeField]
+    [Tooltip("Tile of open door")]
     private TileBase openDoor;
 
     [SerializeField]
+    [Tooltip("Tile of closed door")]
     private TileBase closedDoor;
 
+    /// <summary>
+    /// Are the doors in this tilemap open?
+    /// </summary>
     private bool _doorsOpen;
+    /// <summary>
+    /// This objects Tilemap component.
+    /// </summary>
     private Tilemap _doorsTilemap;
 
     // Start is called before the first frame update

@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// Controller for all avatars in the level.
+/// </summary>
 public class AvatarsControl : MonoBehaviour
 {
     #region Properties
@@ -15,6 +18,7 @@ public class AvatarsControl : MonoBehaviour
     #region Inspector
 
     [SerializeField]
+    [Tooltip("Panel that hold the indicators for active avatars.")]
     private IndicatorControl statePanel;
 
     #endregion
@@ -22,8 +26,17 @@ public class AvatarsControl : MonoBehaviour
 
     #region Private Fields
 
-    public int CurrentPlayer { get; private set; }
+    /// <summary>
+    /// Current player index in the GameManager list.
+    /// </summary>
+    private int _currentPlayer;
+    /// <summary>
+    /// Is the active avatar moving?
+    /// </summary>
     private bool _moving;
+    /// <summary>
+    /// Target direction to move to.
+    /// </summary>
     private Vector2 _targetDirection;
 
     #endregion
@@ -36,9 +49,9 @@ public class AvatarsControl : MonoBehaviour
         GameManager.AvatarController = this;
 
         statePanel.CreateAvatars();
-        statePanel.Indicate(CurrentPlayer);
+        statePanel.Indicate(_currentPlayer);
         
-        GameManager.PlayerList[CurrentPlayer].SetActiveAnimation(true);
+        GameManager.PlayerList[_currentPlayer].SetActiveAnimation(true);
     }
 
 
@@ -49,24 +62,24 @@ public class AvatarsControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameManager.PlayerList[CurrentPlayer].SetActiveAnimation(false);
-            CurrentPlayer = (CurrentPlayer + 1) % GameManager.PlayerList.Count;
-            statePanel.Indicate(CurrentPlayer);
-            GameManager.PlayerList[CurrentPlayer].SetActiveAnimation(true);
+            GameManager.PlayerList[_currentPlayer].SetActiveAnimation(false);
+            _currentPlayer = (_currentPlayer + 1) % GameManager.PlayerList.Count;
+            statePanel.Indicate(_currentPlayer);
+            GameManager.PlayerList[_currentPlayer].SetActiveAnimation(true);
         }
 
         // Choose movement direction based on input, i not already moving.
         if (Input.GetKeyDown(KeyCode.LeftArrow))
-            GameManager.PlayerList[CurrentPlayer].SetMovement(PlayerControl.MovementDirection.Left);
+            GameManager.PlayerList[_currentPlayer].SetMovement(PlayerControl.MovementDirection.Left);
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
-            GameManager.PlayerList[CurrentPlayer].SetMovement(PlayerControl.MovementDirection.Up);
+            GameManager.PlayerList[_currentPlayer].SetMovement(PlayerControl.MovementDirection.Up);
 
         if (Input.GetKeyDown(KeyCode.RightArrow))
-            GameManager.PlayerList[CurrentPlayer].SetMovement(PlayerControl.MovementDirection.Right);
+            GameManager.PlayerList[_currentPlayer].SetMovement(PlayerControl.MovementDirection.Right);
 
         if (Input.GetKeyDown(KeyCode.DownArrow))
-            GameManager.PlayerList[CurrentPlayer].SetMovement(PlayerControl.MovementDirection.Down);
+            GameManager.PlayerList[_currentPlayer].SetMovement(PlayerControl.MovementDirection.Down);
     }
 
     #endregion

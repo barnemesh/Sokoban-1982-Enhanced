@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Scriptable_Objects;
 using TMPro;
-using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -10,37 +9,30 @@ using UnityEngine.SceneManagement;
 public static class GameManager
 {
     #region Private Variables
-
-    private const string ScoreFormat = "Moves: {0,7}  Resets: {1,1}";
-
+    
     private static int _resets;
     private static int _currentLevel;
     private static int _movesInLevel;
     private static int _inDoor;
-
-    private static GameObject _winText;
-    private static GameObject _lostText;
-    private static GameObject _resetText;
-
-    private static GameObject _activeText;
-    private static int _currentPlayer;
+    
     private static TextMeshProUGUI _scoreText;
     private static TextMeshProUGUI _messagesText;
     private static UITexts _uiTexts;
-
-    #endregion
-
-
-    #region Properties
-
-    public static bool LevelWon { get; private set; }
-
 
     /// <summary>
     ///     Maximum number of resets per level. Public to allow future improvements for levels with more or less resets,
     ///     or UI control.
     /// </summary>
-    public static int MaxResets { get; } = 4;
+    private const int MaxResets = 4;
+
+    #endregion
+    
+    #region Properties
+
+    /// <summary>
+    /// Indicate if the current level is complete.
+    /// </summary>
+    public static bool LevelWon { get; private set; }
 
     /// <summary>
     ///     Number of moves since level start. Did not exist in the original game. If there is a score text, updates it.
@@ -56,6 +48,9 @@ public static class GameManager
         }
     }
 
+    /// <summary>
+    /// Count the number of doors that have avatars in them. When all avatars are in doors, the level is won.
+    /// </summary>
     public static int DoorCounter
     {
         get => _inDoor;
@@ -76,6 +71,9 @@ public static class GameManager
     /// </summary>
     public static AvatarsControl AvatarController { get; set; }
 
+    /// <summary>
+    /// List of all active Avatars in the level.
+    /// </summary>
     public static List<PlayerControl> PlayerList { get; } = new List<PlayerControl>();
 
     #endregion
@@ -85,9 +83,9 @@ public static class GameManager
     /// <summary>
     ///     Set the UI texts used in the current level.
     /// </summary>
-    /// <param name="messagesText"></param>
-    /// <param name="scoreText"></param>
-    /// <param name="uiTexts"></param>
+    /// <param name="messagesText"> Center of screen message</param>
+    /// <param name="scoreText"> Score and resets text</param>
+    /// <param name="uiTexts"> UITexts holding the texts and formats to use in this level.</param>
     public static void SetTexts(TextMeshProUGUI messagesText, TextMeshProUGUI scoreText, UITexts uiTexts)
     {
         _uiTexts = uiTexts;
@@ -113,7 +111,7 @@ public static class GameManager
         _resets = levelNumber == _currentLevel ? _resets + 1 : 0;
         _currentLevel = levelNumber;
         LevelWon = false;
-        UpdateScore(); // todo: refactor player resets and this?
+        UpdateScore();
     }
 
     #endregion
@@ -128,7 +126,6 @@ public static class GameManager
     {
         DeactivateText();
         var targetScene = GetTargetScene();
-        Debug.Log("target " + targetScene);
         PlayerList.Clear();
         _inDoor = 0;
         TargetCounter = 0;
@@ -141,7 +138,6 @@ public static class GameManager
     /// </summary>
     public static void ActivateText()
     {
-        // todo: use GetTargetScene
         DeactivateText();
         if (DoorCounter == PlayerList.Count)
             _messagesText.text = _uiTexts.winText;
@@ -169,9 +165,6 @@ public static class GameManager
     /// <returns> NUmber of scene to load</returns>
     private static int GetTargetScene()
     {
-        Debug.Log(DoorCounter);
-        Debug.Log(PlayerList.Count);
-        Debug.Log("in get " + (_currentLevel + 1) % SceneManager.sceneCountInBuildSettings);
         if (DoorCounter == PlayerList.Count)
             return (_currentLevel + 1) % SceneManager.sceneCountInBuildSettings;
         return _resets >= MaxResets ? 0 : _currentLevel;
@@ -183,7 +176,8 @@ public static class GameManager
     /// </summary>
     private static void UpdateScore()
     {
-        if (_scoreText == null) return;
+        if (_scoreText == null) 
+            return;
         _scoreText.text = string.Format(_uiTexts.scoreFormat, _movesInLevel, MaxResets - _resets);
     }
 

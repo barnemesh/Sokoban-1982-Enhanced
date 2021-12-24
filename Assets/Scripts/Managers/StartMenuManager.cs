@@ -13,8 +13,10 @@ public class StartMenuManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) GameManager.SwitchToTargetScene();
+        if (Input.GetKeyDown(KeyCode.Space))
+            GameManager.SwitchToTargetScene();
 
-        if (Input.GetKeyDown(KeyCode.Q)) Application.Quit();
+        if (Input.GetKeyDown(KeyCode.Q))
+            Application.Quit();
     }
 }
