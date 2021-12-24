@@ -60,7 +60,10 @@ public class LevelGameManager : MonoBehaviour
         // if already waiting for input, check if there is input.
         if (!_waitingForInput) return;
         if (Input.GetKeyDown(KeyCode.Q))
+        {
             Application.Quit();
+            GameManager.SaveScores();
+        }
 
         if (Input.GetKeyDown(KeyCode.Y))
             GameManager.SwitchToTargetScene();

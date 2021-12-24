@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.IO;
 using Scriptable_Objects;
 using TMPro;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
@@ -8,6 +10,7 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public static class GameManager
 {
+
     #region Private Variables
     
     private static int _resets;
@@ -18,6 +21,7 @@ public static class GameManager
     private static TextMeshProUGUI _scoreText;
     private static TextMeshProUGUI _messagesText;
     private static UITexts _uiTexts;
+    private static HighScores _scores;
 
     /// <summary>
     ///     Maximum number of resets per level. Public to allow future improvements for levels with more or less resets,
@@ -28,6 +32,11 @@ public static class GameManager
     #endregion
     
     #region Properties
+    public static HighScores Scores
+    {
+        get => _scores;
+        set => _scores ??= value;
+    }
 
     /// <summary>
     /// Indicate if the current level is complete.
@@ -58,6 +67,13 @@ public static class GameManager
         {
             _inDoor = value;
             LevelWon = _inDoor == PlayerList.Count;
+            if (LevelWon && Scores != null)
+            {
+                if (Scores.moves[_currentLevel] == 0 || MoveCounter < Scores.moves[_currentLevel])
+                {
+                    Scores.moves[_currentLevel] = MoveCounter;
+                }
+            }
         }
     }
 
@@ -112,6 +128,10 @@ public static class GameManager
         _currentLevel = levelNumber;
         LevelWon = false;
         UpdateScore();
+        if (Scores == null) 
+            return;
+        
+        Debug.Log($"Highscore for this level is: {Scores.moves[_currentLevel]}");
     }
 
     #endregion
@@ -152,6 +172,16 @@ public static class GameManager
     {
         if (_messagesText != null) 
             _messagesText.text = "";
+    }
+
+    public static void SaveScores()
+    {
+        if (Scores == null) 
+            return;
+        File.WriteAllText(Application.persistentDataPath + "/highscores.json", JsonUtility.ToJson(Scores));
+        Debug.Log(JsonUtility.ToJson(Scores));
+
+        Debug.Log("Game Saved");
     }
 
     #endregion
