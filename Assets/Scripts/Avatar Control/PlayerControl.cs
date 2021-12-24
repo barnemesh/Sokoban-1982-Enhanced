@@ -47,6 +47,10 @@ public class PlayerControl : MonoBehaviour
 
     #region Public Methods
 
+    public void SetActiveAnimation(bool state)
+    {
+        animator.SetInteger(_animatorHash, state ? -4 : 4);
+    }
     public void ToggleIdle()
     {
         animator.SetInteger(_animatorHash, -animator.GetInteger(_animatorHash));
@@ -109,6 +113,7 @@ public class PlayerControl : MonoBehaviour
         _animatorHash = Animator.StringToHash("Direction");
         _lastPosition = myRigidbody.position;
         GameManager.PlayerList.Add(this); // register this player as active
+        SetActiveAnimation(false);
     }
 
     private void FixedUpdate()

@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 92218977}
   - component: {fileID: 92218978}
+  - component: {fileID: 92218979}
   m_Layer: 5
   m_Name: State
   m_TagString: Untagged
@@ -185,6 +186,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &92218979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 92218976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9985bc578818ff04fb0f83baf67d7256, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  avatarMarker: {fileID: 1236921990717329754, guid: e3ee07b724777d048a7c67d6faa10e2a, type: 3}
 --- !u!1 &211904147
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +283,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 38.6
+  m_fontSize: 41.1
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -403,7 +417,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40.35
+  m_fontSize: 42.95
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1498,7 +1512,7 @@ GameObject:
   m_Layer: 0
   m_Name: Avatar Control
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1514,8 +1528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b397570373333cb4780ddb76ad710742, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  avatarMarker: {fileID: 1236921990717329754, guid: e3ee07b724777d048a7c67d6faa10e2a, type: 3}
-  statePanel: {fileID: 92218976}
+  statePanel: {fileID: 92218979}
 --- !u!4 &1752691523
 Transform:
   m_ObjectHideFlags: 0
@@ -1524,7 +1537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1752691521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5248451, y: -0.09407481, z: -0.51100403}
+  m_LocalPosition: {x: 11.01, y: 5.95, z: -0.51100403}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1679,7 +1692,7 @@ GameObject:
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -2579,11 +2592,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 643425666656208199, guid: 9f81747c73a3f3c48adcb4d9e95612d2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 10.98
       objectReference: {fileID: 0}
     - target: {fileID: 643425666656208199, guid: 9f81747c73a3f3c48adcb4d9e95612d2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 6.53
       objectReference: {fileID: 0}
     - target: {fileID: 643425666656208199, guid: 9f81747c73a3f3c48adcb4d9e95612d2, type: 3}
       propertyPath: m_LocalPosition.z

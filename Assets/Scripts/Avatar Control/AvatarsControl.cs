@@ -15,10 +15,7 @@ public class AvatarsControl : MonoBehaviour
     #region Inspector
 
     [SerializeField]
-    private GameObject avatarMarker;
-
-    [SerializeField]
-    private GameObject statePanel;
+    private IndicatorControl statePanel;
 
     #endregion
 
@@ -38,16 +35,10 @@ public class AvatarsControl : MonoBehaviour
     {
         GameManager.AvatarController = this;
 
-        if (avatarMarker != null)
-        {
-            for (var i = 0; i < GameManager.PlayerList.Count; i++)
-            {
-                Instantiate(avatarMarker, statePanel.transform);
-            }
-        }
-
-
-        GameManager.PlayerList[CurrentPlayer].ToggleIdle();
+        statePanel.CreateAvatars();
+        statePanel.Indicate(CurrentPlayer);
+        
+        GameManager.PlayerList[CurrentPlayer].SetActiveAnimation(true);
     }
 
 
@@ -58,9 +49,10 @@ public class AvatarsControl : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameManager.PlayerList[CurrentPlayer].ToggleIdle();
+            GameManager.PlayerList[CurrentPlayer].SetActiveAnimation(false);
             CurrentPlayer = (CurrentPlayer + 1) % GameManager.PlayerList.Count;
-            GameManager.PlayerList[CurrentPlayer].ToggleIdle();
+            statePanel.Indicate(CurrentPlayer);
+            GameManager.PlayerList[CurrentPlayer].SetActiveAnimation(true);
         }
 
         // Choose movement direction based on input, i not already moving.

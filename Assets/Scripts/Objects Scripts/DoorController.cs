@@ -30,7 +30,6 @@ public class DoorController : MonoBehaviour
 
         if (_doorsOpen && GameManager.TargetCounter > 0)
         {
-            print("here");
             _doorsOpen = false;
             _doorsTilemap.SwapTile(openDoor, closedDoor);
             _doorsTilemap.GetComponent<TilemapCollider2D>().isTrigger = false;
