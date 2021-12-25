@@ -32,6 +32,9 @@ public static class GameManager
     #endregion
     
     #region Properties
+
+    public static string Name { get; set; }
+
     public static HighScores Scores
     {
         get => _scores;
@@ -73,11 +76,12 @@ public static class GameManager
                 var i = Scores.entries.FindIndex(x => x.level == _currentLevel);
                 if (i == -1)
                 {
-                    Scores.entries.Add(new HighScoreEntry(_currentLevel, MoveCounter));
+                    Scores.entries.Add(new HighScoreEntry(_currentLevel, MoveCounter, Name));
                 }
-                else if (MoveCounter < Scores.entries[i].moves)
+                else if (MoveCounter <= Scores.entries[i].moves)
                 {
                     Scores.entries[i].moves = MoveCounter;
+                    Scores.entries[i].name = Name;
                 }
             }
         }
@@ -215,6 +219,11 @@ public static class GameManager
         if (_scoreText == null) 
             return;
         _scoreText.text = string.Format(_uiTexts.scoreFormat, _movesInLevel, MaxResets - _resets);
+        if (Scores != null)
+        {
+            // todo: null check?
+            _scoreText.text += "\t" + Scores.entries.Find(x => x.level == _currentLevel);
+        }
     }
 
     #endregion

@@ -18,14 +18,15 @@ public class HighScoreEntry
     public string name;
     public int moves;
 
-    public HighScoreEntry(int level, int moves)
+    public HighScoreEntry(int level, int moves, string name = "")
     {
         this.level = level;
         this.moves = moves;
+        this.name = name;
     }
     public override string ToString()
     {
-        return $"#{level} : {moves} moves by {name}";
+        return $"# Best in level {level}: {moves} moves by {name}";
     }
 
     public static int HighScoreCompare(HighScoreEntry lhs, HighScoreEntry rhs)

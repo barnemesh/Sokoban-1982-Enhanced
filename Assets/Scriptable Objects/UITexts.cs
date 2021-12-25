@@ -23,5 +23,6 @@ namespace Scriptable_Objects
         [TextArea]
         [Tooltip("Format to use to display moves and resets. must have format space for moves and for resets.")]
         public string scoreFormat;
+        // todo: add highscore gained text.
     }
 }

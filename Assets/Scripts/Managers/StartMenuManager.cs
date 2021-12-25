@@ -10,6 +10,7 @@ public class StartMenuManager : MonoBehaviour
     {
         GameManager.SetLevel(0);
         LoadScores();
+        
     }
 
     // Update is called once per frame
@@ -23,6 +24,12 @@ public class StartMenuManager : MonoBehaviour
             Application.Quit();
             GameManager.SaveScores();
         }
+    }
+
+    public void GetName(string test)
+    {
+        GameManager.Name = test;
+        print(GameManager.Name);
     }
     
     private void LoadScores()
