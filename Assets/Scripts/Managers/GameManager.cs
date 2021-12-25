@@ -69,9 +69,15 @@ public static class GameManager
             LevelWon = _inDoor == PlayerList.Count;
             if (LevelWon && Scores != null)
             {
-                if (Scores.moves[_currentLevel] == 0 || MoveCounter < Scores.moves[_currentLevel])
+                // todo: find
+                var i = Scores.entries.FindIndex(x => x.level == _currentLevel);
+                if (i == -1)
                 {
-                    Scores.moves[_currentLevel] = MoveCounter;
+                    Scores.entries.Add(new HighScoreEntry(_currentLevel, MoveCounter));
+                }
+                else if (MoveCounter < Scores.entries[i].moves)
+                {
+                    Scores.entries[i].moves = MoveCounter;
                 }
             }
         }
@@ -128,10 +134,10 @@ public static class GameManager
         _currentLevel = levelNumber;
         LevelWon = false;
         UpdateScore();
+        
         if (Scores == null) 
             return;
-        
-        Debug.Log($"Highscore for this level is: {Scores.moves[_currentLevel]}");
+        Debug.Log(Scores.entries.Find(x => x.level == _currentLevel));
     }
 
     #endregion

@@ -34,17 +34,18 @@ public class StartMenuManager : MonoBehaviour
 
             var scores = JsonUtility.FromJson<HighScores>(json);
             GameManager.Scores = scores;
+            scores.entries.Sort(HighScoreEntry.HighScoreCompare);
             
             Debug.Log("Scores Loaded");
-            for (var index = 0; index < scores.moves.Count; index++)
+            foreach (var highScoreEntry in scores.entries)
             {
-                print(index + " : " + scores.moves[index]);
+                print(highScoreEntry);
             }
         }
         else
         {
             GameManager.Scores = new HighScores();
-            GameManager.Scores.moves[0] = -1;
+            GameManager.Scores.entries[0] = new HighScoreEntry(0, -1);
             Debug.Log("Scores Created");
 
         }
