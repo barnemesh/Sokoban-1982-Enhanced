@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using Scriptable_Objects;
 using TMPro;
 using UnityEngine;
@@ -33,8 +32,14 @@ public static class GameManager
     
     #region Properties
 
-    public static string Name { get; set; }
+    /// <summary>
+    /// Name the current player set for high-scores.
+    /// </summary>
+    public static string UserName { get; set; }
 
+    /// <summary>
+    /// The HighScores loaded for this play.
+    /// </summary>
     public static HighScores Scores
     {
         get => _scores;
@@ -76,12 +81,12 @@ public static class GameManager
                 var i = Scores.entries.FindIndex(x => x.level == _currentLevel);
                 if (i == -1)
                 {
-                    Scores.entries.Add(new HighScoreEntry(_currentLevel, MoveCounter, Name));
+                    Scores.entries.Add(new HighScoreEntry(_currentLevel, MoveCounter, UserName));
                 }
                 else if (MoveCounter <= Scores.entries[i].moves)
                 {
                     Scores.entries[i].moves = MoveCounter;
-                    Scores.entries[i].name = Name;
+                    Scores.entries[i].name = UserName;
                 }
             }
         }
@@ -146,7 +151,6 @@ public static class GameManager
 
     #endregion
 
-
     #region Manager Methods
 
     /// <summary>
@@ -184,19 +188,24 @@ public static class GameManager
             _messagesText.text = "";
     }
 
-    public static void SaveScores()
+    /// <summary>
+    /// Load scores from file.
+    /// </summary>
+    public static void LoadScores ()
     {
-        if (Scores == null) 
-            return;
-        File.WriteAllText(Application.persistentDataPath + "/highscores.json", JsonUtility.ToJson(Scores));
-        Debug.Log(JsonUtility.ToJson(Scores));
-
-        Debug.Log("Game Saved");
+        HighScoreManager.LoadScores();
     }
-
+    
+    /// <summary>
+    /// Save scores to file.
+    /// </summary>
+    public static void SaveScores ()
+    {
+        HighScoreManager.SaveScores();
+    }
+    
     #endregion
-
-
+    
     #region Private Helper Methods
 
     /// <summary>

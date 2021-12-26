@@ -9,7 +9,7 @@ public class StartMenuManager : MonoBehaviour
     private void Start()
     {
         GameManager.SetLevel(0);
-        LoadScores();
+        GameManager.LoadScores();
         
     }
 
@@ -28,33 +28,8 @@ public class StartMenuManager : MonoBehaviour
 
     public void GetName(string test)
     {
-        GameManager.Name = test;
-        print(GameManager.Name);
+        GameManager.UserName = test.ToUpper();
+        print(GameManager.UserName);
     }
     
-    private void LoadScores()
-    { 
-        if (File.Exists(Application.persistentDataPath + "/highscores.json"))
-        {
-            StreamReader reader = new StreamReader(Application.persistentDataPath + "/highscores.json");
-            string json = reader.ReadToEnd();
-
-            var scores = JsonUtility.FromJson<HighScores>(json);
-            GameManager.Scores = scores;
-            scores.entries.Sort(HighScoreEntry.HighScoreCompare);
-            
-            Debug.Log("Scores Loaded");
-            foreach (var highScoreEntry in scores.entries)
-            {
-                print(highScoreEntry);
-            }
-        }
-        else
-        {
-            GameManager.Scores = new HighScores();
-            GameManager.Scores.entries[0] = new HighScoreEntry(0, -1);
-            Debug.Log("Scores Created");
-
-        }
-    }
 }
