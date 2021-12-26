@@ -60,6 +60,9 @@ public static class HighScoreManager
     #endregion
 }
 
+/// <summary>
+/// Serializable object that hold the highscores.
+/// </summary>
 [Serializable]
 public class HighScores
 {
@@ -73,6 +76,9 @@ public class HighScores
     }
 }
 
+/// <summary>
+/// Hold highscore for a single level
+/// </summary>
 [Serializable]
 public class HighScoreEntry
 {
@@ -91,6 +97,7 @@ public class HighScoreEntry
         return $"# Best in level {level}: {moves} moves by {name}";
     }
 
+    /// testing sorting the list
     public static int HighScoreCompare(HighScoreEntry lhs, HighScoreEntry rhs)
     {
         return lhs == null ? rhs == null ? 0 : -1 : rhs == null ? 1 : lhs.level.CompareTo(rhs.level);

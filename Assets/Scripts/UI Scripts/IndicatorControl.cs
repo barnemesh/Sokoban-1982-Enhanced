@@ -38,6 +38,9 @@ public class IndicatorControl : MonoBehaviour
 
     #region Public Methods
 
+    /// <summary>
+    /// Initialize avatars images
+    /// </summary>
     public void CreateAvatars()
     {
         if (avatarMarker != null)
@@ -58,6 +61,10 @@ public class IndicatorControl : MonoBehaviour
         _indicators[0].GetComponentInChildren<Animator>().SetBool(Empty, true);
     }
 
+    /// <summary>
+    /// Switch active image to image #i
+    /// </summary>
+    /// <param name="i">index of the player to indicate</param>
     public void Indicate(int i)
     {
         if (_indicators.Count == 0) 

@@ -310,7 +310,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 31.95
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -970,7 +970,7 @@ MonoBehaviour:
     try your best. However, since the <sprite name=Box>s are large, you can only
     push them one by one. If you do poorly, the <sprite name=Box> will get stuck!
     When you finish, the <sprite name=Door closed>s to the next warehouse will <sprite
-    name=Door open>. Be carefull -  you have limited number of attempts.</color>\n\n<align=\"center\"><color=purple>\u2191
+    name=Door open>. Be careful -  you have limited number of attempts.</color>\n\n<align=\"center\"><color=purple>\u2191
     Key (up) \n|\n\u2190 Key \u2014 \u2193 Key \u2014 \u2192Key\n    (Left)   (down)   
     (Right)  \n\n[Space] Key to switch characters</color>\n<align=\"flush\">\n|When
     you fail or want to reset the job press the<color=red> F\u20221 key</color>.|\n|If
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18.7
+  m_fontSize: 18.65
   m_fontSizeBase: 12
   m_fontWeight: 400
   m_enableAutoSizing: 1
