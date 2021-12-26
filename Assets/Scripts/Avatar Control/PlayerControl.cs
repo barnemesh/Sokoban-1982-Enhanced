@@ -80,7 +80,7 @@ public class PlayerControl : MonoBehaviour
     /// <param name="state"> the desired state</param>
     public void SetActiveAnimation(bool state)
     {
-        animator.SetInteger(DirectionHash, state ? -4 : 4);
+        animator.SetInteger(DirectionHash, state ? -4 : 0);
     }
 
     /// <summary>
