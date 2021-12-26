@@ -1,37 +1,46 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+/// <summary>
+/// Manage opening and closing doors in a Tilemap
+/// </summary>
 public class DoorController : MonoBehaviour
 {
-    private Tilemap _doorsTilemap;
-    private bool _doorsOpen;
-
     [SerializeField]
+    [Tooltip("Tile of open door")]
     private TileBase openDoor;
 
     [SerializeField]
+    [Tooltip("Tile of closed door")]
     private TileBase closedDoor;
-    
+
+    /// <summary>
+    /// Are the doors in this tilemap open?
+    /// </summary>
+    private bool _doorsOpen;
+    /// <summary>
+    /// This objects Tilemap component.
+    /// </summary>
+    private Tilemap _doorsTilemap;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _doorsTilemap = GetComponent<Tilemap>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        if ( !_doorsOpen && GameManager.TargetCounter == 0 )
+        if (!_doorsOpen && GameManager.TargetCounter == 0)
         {
             _doorsOpen = true;
             _doorsTilemap.SwapTile(closedDoor, openDoor);
             _doorsTilemap.GetComponent<TilemapCollider2D>().isTrigger = true;
         }
-        if ( _doorsOpen && GameManager.TargetCounter > 0 )
+
+        if (_doorsOpen && GameManager.TargetCounter > 0)
         {
-            print("here");
             _doorsOpen = false;
             _doorsTilemap.SwapTile(openDoor, closedDoor);
             _doorsTilemap.GetComponent<TilemapCollider2D>().isTrigger = false;

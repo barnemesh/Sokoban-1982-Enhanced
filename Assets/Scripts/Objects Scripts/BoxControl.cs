@@ -15,24 +15,23 @@ public class BoxControl : MonoBehaviour
     /// </summary>
     /// <param name="direction">direction to move</param>
     /// <returns>true if moved, false o.w</returns>
-    public bool TryToMoveInDirection (Vector2 direction)
+    public bool TryToMoveInDirection(Vector2 direction)
     {
-        if ( _moving ) return false;
+        if (_moving) 
+            return false;
 
         var hit = Physics2D.Raycast(myRigidbody.position, direction, 1.0f);
-        if ( hit.collider == null )
-        {
-            _targetDirection = direction;
-            _moving = true;
-            return true;
-        }
+        if (hit.collider != null) 
+            return false;
+        
+        _targetDirection = direction;
+        _moving = true;
+        return true;
 
-        return false;
     }
 
     #endregion
-
-
+    
     #region Inspector
 
     [SerializeField]
@@ -40,32 +39,46 @@ public class BoxControl : MonoBehaviour
     private float updatesCountInMovement = 4.0f;
 
     [SerializeField]
+    [Tooltip("This objects rigidbody.")]
     private Rigidbody2D myRigidbody;
 
     #endregion
-
-
+    
     #region Private Fields
 
+    /// <summary>
+    /// Target direction to move to.
+    /// </summary>
     private Vector2 _targetDirection;
-    private bool _moving;
+
+    /// <summary>
+    /// Position before movement started
+    /// </summary>
     private Vector2 _lastPosition;
+
+    /// <summary>
+    /// Is the avatar moving currently?
+    /// </summary>
+    private bool _moving;
+
+    /// <summary>
+    /// Percentage of movement complete.
+    /// </summary>
     private float _distancePercentage;
 
     #endregion
 
-
     #region Monobehaviour
 
-    private void Start ()
+    private void Start()
     {
         _lastPosition = myRigidbody.position;
         GameManager.TargetCounter++;
     }
 
-    private void FixedUpdate ()
+    private void FixedUpdate()
     {
-        if ( !_moving )
+        if (!_moving)
             return;
 
         // If we need to move, use exactly updatesCountInMovement to finish the entire movement.
@@ -74,7 +87,7 @@ public class BoxControl : MonoBehaviour
 
         myRigidbody.MovePosition(_lastPosition + _distancePercentage * _targetDirection);
 
-        if ( !(_distancePercentage >= 1) )
+        if (!(_distancePercentage >= 1))
             return;
 
         _distancePercentage = 0;
@@ -82,16 +95,16 @@ public class BoxControl : MonoBehaviour
         _moving = false;
     }
 
-    private void OnTriggerEnter2D (Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         // When a box reaches a target - mark that target as complete
-        if ( other.CompareTag("Target") ) GameManager.TargetCounter--;
+        if (other.CompareTag("Target")) GameManager.TargetCounter--;
     }
 
-    private void OnTriggerExit2D (Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         // When a box leaves a target - mark that target as not complete
-        if ( other.CompareTag("Target") ) GameManager.TargetCounter++;
+        if (other.CompareTag("Target")) GameManager.TargetCounter++;
     }
 
     #endregion

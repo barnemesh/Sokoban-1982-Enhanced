@@ -1,56 +1,56 @@
 using Scriptable_Objects;
-using Scriptable_Objects.Level_Datas;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
+/// <summary>
+/// Manager of a single level in the game.
+/// </summary>
 public class LevelGameManager : MonoBehaviour
 {
-    #region Inspect
-
-    [SerializeField]
-    private UITexts texts;
-    
-    /// <summary>
-    /// Text to show score. Did not exist in the original game.
-    /// </summary>
-    [SerializeField]
-    private TextMeshProUGUI scoreText;
-
-
-    [SerializeField]
-    private TextMeshProUGUI messagesText;
-    /// <summary>
-    /// This level number.
-    /// </summary>
-    [SerializeField]
-    private int levelNumber;
-
-    #endregion
-
-
     #region Private Fields
 
+    /// <summary>
+    /// Is the game waiting for input?
+    /// </summary>
     private bool _waitingForInput;
 
     #endregion
 
+    #region Inspector
+
+    [SerializeField]
+    [Tooltip("UITexts objects that hold the texts and formats for this level.")]
+    private UITexts texts;
+    
+    [SerializeField]
+    [Tooltip("Text to show score")]
+    private TextMeshProUGUI scoreText;
+
+
+    [SerializeField]
+    [Tooltip("Text to show any message to user.")]
+    private TextMeshProUGUI messagesText;
+
+    // TODO: Use scene number instead?
+    [SerializeField]
+    [Tooltip("This level number.")]
+    private int levelNumber;
+
+    #endregion
 
     #region Monobehaviour
 
-    private void Start ()
+    private void Start()
     {
         // Update GameManager with current level data
         GameManager.SetTexts(messagesText, scoreText, texts);
         GameManager.SetLevel(levelNumber);
-        
     }
 
-    private void Update ()
+    private void Update()
     {
-
         // Use f1 to do stuff.
-        if ( !_waitingForInput && (Input.GetKeyDown(KeyCode.F1) || GameManager.LevelWon ))
+        if (!_waitingForInput && (Input.GetKeyDown(KeyCode.F1) || GameManager.LevelWon))
         {
             _waitingForInput = true;
             GameManager.TogglePlayerMovement();
@@ -58,14 +58,17 @@ public class LevelGameManager : MonoBehaviour
         }
 
         // if already waiting for input, check if there is input.
-        if ( !_waitingForInput ) return;
-        if ( Input.GetKeyDown(KeyCode.Q) )
+        if (!_waitingForInput) return;
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
             Application.Quit();
+            GameManager.SaveScores();
+        }
 
-        if ( Input.GetKeyDown(KeyCode.Y) )
+        if (Input.GetKeyDown(KeyCode.Y))
             GameManager.SwitchToTargetScene();
 
-        if ( Input.GetKeyDown(KeyCode.N) && !GameManager.LevelWon)
+        if (Input.GetKeyDown(KeyCode.N) && !GameManager.LevelWon)
         {
             _waitingForInput = false;
             GameManager.TogglePlayerMovement();
