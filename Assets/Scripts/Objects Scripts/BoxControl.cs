@@ -27,7 +27,6 @@ public class BoxControl : MonoBehaviour
         _targetDirection = direction;
         _moving = true;
         return true;
-
     }
 
     #endregion
@@ -98,13 +97,15 @@ public class BoxControl : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // When a box reaches a target - mark that target as complete
-        if (other.CompareTag("Target")) GameManager.TargetCounter--;
+        if (other.CompareTag("Target")) 
+            GameManager.TargetCounter--;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         // When a box leaves a target - mark that target as not complete
-        if (other.CompareTag("Target")) GameManager.TargetCounter++;
+        if (other.CompareTag("Target")) 
+            GameManager.TargetCounter++;
     }
 
     #endregion

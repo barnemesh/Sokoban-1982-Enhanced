@@ -345,7 +345,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 42.95
+  m_fontSize: 70.2
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -479,7 +479,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 41.1
+  m_fontSize: 67.2
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1768,7 +1768,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155815632}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
@@ -2192,8 +2192,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea14b1f8a258614458c70c6375782657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openDoor: {fileID: 11400000, guid: 90015d13c39900545824c79aff474deb, type: 2}
-  closedDoor: {fileID: 11400000, guid: 138f961748a1a5649a1749df97e6dfa8, type: 2}
+  tileWhenActive: {fileID: 11400000, guid: 90015d13c39900545824c79aff474deb, type: 2}
+  tileWhenInactive: {fileID: 11400000, guid: 138f961748a1a5649a1749df97e6dfa8, type: 2}
+  triggerStateWhenActive: 1
 --- !u!1 &1616012563
 GameObject:
   m_ObjectHideFlags: 0

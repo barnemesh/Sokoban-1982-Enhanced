@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /**
@@ -13,7 +14,8 @@ public class PlayerControl : MonoBehaviour
     private static readonly int DirectionHash = Animator.StringToHash("Direction");
 
     #endregion
-    
+
+
     #region Enums
 
     /// <summary>
@@ -78,7 +80,7 @@ public class PlayerControl : MonoBehaviour
     /// Set the Idle animation, indicating this avatar is active.
     /// </summary>
     /// <param name="state"> the desired state</param>
-    public void SetActiveAnimation(bool state)
+    public void SetActiveAnimation (bool state)
     {
         animator.SetInteger(DirectionHash, state ? -4 : 0);
     }
@@ -87,9 +89,9 @@ public class PlayerControl : MonoBehaviour
     /// Start moving in the given direction, if possible.
     /// </summary>
     /// <param name="direction"></param>
-    public bool SetMovement(MovementDirection direction)
+    public bool SetMovement (MovementDirection direction)
     {
-        if (_moving)
+        if ( _moving )
             return false;
 
         switch (direction)
@@ -120,21 +122,22 @@ public class PlayerControl : MonoBehaviour
         var hit = Physics2D.Raycast(myRigidbody.position, _targetDirection, 1.0f);
 
         // if there is a box, check if it can be moved before moving.
-        if (hit.collider != null && hit.collider.CompareTag("Box"))
+        if ( hit.collider != null && hit.collider.CompareTag("Box") )
         {
             var boxControl = hit.collider.GetComponent<BoxControl>();
-            if (!boxControl.TryToMoveInDirection(_targetDirection))
+            if ( !boxControl.TryToMoveInDirection(_targetDirection) )
                 return false;
 
             _moving = true;
         }
 
-        if (hit.collider == null)
+        if ( hit.collider == null )
             _moving = true;
 
         // Count movements
-        if (_moving)
+        if ( _moving )
             GameManager.MoveCounter++;
+
         return _moving;
     }
 
@@ -143,16 +146,16 @@ public class PlayerControl : MonoBehaviour
 
     #region Monobehaviour
 
-    private void Awake()
+    private void Awake ()
     {
         _lastPosition = myRigidbody.position;
         GameManager.PlayerList.Add(this); // register this player as active
         SetActiveAnimation(false);
     }
 
-    private void FixedUpdate()
+    private void FixedUpdate ()
     {
-        if (!_moving)
+        if ( !_moving )
             return;
 
         // If we need to move, use exactly updatesCountInMovement to finish the entire movement.
@@ -161,27 +164,13 @@ public class PlayerControl : MonoBehaviour
 
         myRigidbody.MovePosition(_lastPosition + _distancePercentage * _targetDirection);
 
-        if (!(_distancePercentage >= 1))
+        if ( !(_distancePercentage >= 1) )
             return;
 
         _distancePercentage = 0;
         _lastPosition += _targetDirection;
         _moving = false;
     }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        // When an avatar reaches a door - mark that door as entered
-        if (other.CompareTag("Door"))
-            GameManager.DoorCounter++;
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        // When an avatar leaves a door - mark that door as empty
-        if (other.CompareTag("Door"))
-            GameManager.DoorCounter--;
-    }
-
+    
     #endregion
 }
