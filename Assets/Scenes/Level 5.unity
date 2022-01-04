@@ -9082,7 +9082,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 138f961748a1a5649a1749df97e6dfa8, type: 2}
     - target: {fileID: 643425666656208196, guid: 9f81747c73a3f3c48adcb4d9e95612d2, type: 3}
       propertyPath: levelNumber
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 643425666656208196, guid: 9f81747c73a3f3c48adcb4d9e95612d2, type: 3}
       propertyPath: doorsTilemap

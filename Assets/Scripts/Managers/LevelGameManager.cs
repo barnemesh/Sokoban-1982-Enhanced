@@ -67,12 +67,12 @@ public class LevelGameManager : MonoBehaviour
             GameManager.SaveScores();
         }
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Y))
         {
             GameManager.SwitchToSceneByNumber(0);
         }
 
-        if (Input.GetKeyDown(KeyCode.Y))
+        if (Input.GetKeyDown(KeyCode.Space))
             GameManager.SwitchToTargetScene();
 
         if (Input.GetKeyDown(KeyCode.N) && !(GameManager.LevelWon || GameManager.BoxIsStuck))
