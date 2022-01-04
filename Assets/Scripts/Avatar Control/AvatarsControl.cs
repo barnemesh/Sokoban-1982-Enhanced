@@ -60,7 +60,8 @@ public class AvatarsControl : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Pause || _moving) return;
+        if (Pause || _moving) 
+            return;
 
         if (Input.GetKeyDown(KeyCode.Space))
         {

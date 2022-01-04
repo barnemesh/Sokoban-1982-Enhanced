@@ -1,31 +1,38 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Manager for the level chooser scene
+/// </summary>
 public class LevelIndicator : MonoBehaviour
 {
     #region Inspector
 
     [SerializeField]
-    [Tooltip("")]
+    [Tooltip("Prefab for the items in the list")]
     private GameObject markerPrefab;
 
     [SerializeField]
-    [Tooltip("")]
+    [Tooltip("Text in the item for the Main Menu")]
     private string mainMenu = "Main Menu";
-    [SerializeField]
-    [Tooltip("")]
-    private string normalLevel = "Level {0}";
 
+    [SerializeField]
+    [Tooltip("Format for the text in the item for each level")]
+    private string normalLevel = "Level {0}";
 
     #endregion
 
     #region Private Fields
 
+    /// <summary>
+    /// List of all indicators
+    /// </summary>
     private readonly List<MarkerControl> _indicators = new List<MarkerControl>();
-    
+
+    /// <summary>
+    /// Currently chosen item
+    /// </summary>
     private int _index;
 
     #endregion
@@ -42,7 +49,7 @@ public class LevelIndicator : MonoBehaviour
         ind.Marked = true;
         ind.Text = mainMenu;
         _indicators.Add(ind);
-        
+
         for (var i = 1; i < SceneManager.sceneCountInBuildSettings - 1; i++)
         {
             item = Instantiate(markerPrefab, transform);
@@ -51,7 +58,6 @@ public class LevelIndicator : MonoBehaviour
             ind.Text = string.Format(normalLevel, i);
             _indicators.Add(ind);
         }
-        
     }
 
     private void Update()
@@ -61,7 +67,7 @@ public class LevelIndicator : MonoBehaviour
             Application.Quit();
             GameManager.SaveScores();
         }
-        
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GameManager.SwitchToSceneByNumber(_index);
@@ -71,13 +77,16 @@ public class LevelIndicator : MonoBehaviour
             Indicate(_index - 1);
         if (Input.GetKeyDown(KeyCode.DownArrow))
             Indicate(_index + 1);
-        
     }
 
     #endregion
 
     #region Private Methods
 
+    /// <summary>
+    /// Indicate new item
+    /// </summary>
+    /// <param name="i"> index of new item to indicate</param>
     private void Indicate(int i)
     {
         if (_indicators.Count == 0)
