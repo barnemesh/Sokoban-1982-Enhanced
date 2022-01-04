@@ -84,6 +84,21 @@ public class DoorController : MonoBehaviour
         }
     }
 
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if ( other.collider.CompareTag("Player") )
+        {
+            _playerOnSelf--;
+        }
+    }
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if ( other.collider.CompareTag("Player") )
+        {
+            _playerOnSelf++;
+        }
+    }
+
     private void OnTriggerEnter2D (Collider2D other)
     {
         // When an avatar reaches a door - mark that door as entered
@@ -114,11 +129,7 @@ public class DoorController : MonoBehaviour
     /// </summary>
     private void HandleExitWhenDisablingTrigger ()
     {
-        if ( _tilemapCollider.isTrigger )
-            return;
-
-        GameManager.DoorCounter -= _playerOnSelf;
-        _playerOnSelf = 0;
+        GameManager.DoorCounter += _tilemapCollider.isTrigger ? _playerOnSelf : -_playerOnSelf;
     }
 
     #endregion
