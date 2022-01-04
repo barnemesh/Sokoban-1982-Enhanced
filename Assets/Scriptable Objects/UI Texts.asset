@@ -15,11 +15,21 @@ MonoBehaviour:
   winText: 'Warehouse is complete!
 
 
-    [Y] to continue'
+    Next level - [Y]
+
+    Save scores - [Q]
+
+    Back
+    to Main Menu - [Space]'
   loseText: 'You will fail if you call for help !
 
 
-    Reset the game ? (Y/N)'
-  resetText: "Do your best or you will get fired !  \n\nDo yo want to try again ?
-    (Y/N)"
+    Save scores - [Q]
+
+    Back
+    to Main Menu - [Space] / [Y]'
+  resetText: "Do your best or you will get fired !  \n\nReturn to game - [N]\nReset
+    level - [Y]\nSave scores - [Q]\nBack to Main Menu - [Space]"
+  boxStuckText: "A box got stuck !  \n\nReset level - [Y]\nSave scores - [Q]\nBack
+    to Main Menu - [Space]"
   scoreFormat: 'Moves: {0,7}  Resets: {1,1}'

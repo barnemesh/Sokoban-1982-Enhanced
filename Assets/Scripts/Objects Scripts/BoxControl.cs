@@ -8,6 +8,28 @@ using UnityEngine;
  */
 public class BoxControl : MonoBehaviour
 {
+    #region Private Methods
+
+    private bool IsStuck()
+    {
+        if (_onTarget)
+            return false;
+        
+        var hitUp = Physics2D.Raycast(myRigidbody.position, Vector2.up, 1.0f);
+        var hitLeft = Physics2D.Raycast(myRigidbody.position, Vector2.left, 1.0f);
+        var hitRight = Physics2D.Raycast(myRigidbody.position, Vector2.right, 1.0f);
+        var hitDown = Physics2D.Raycast(myRigidbody.position, Vector2.down, 1.0f);
+
+        var up = hitUp.collider != null && hitUp.collider.CompareTag("Wall");
+        var left = hitLeft.collider != null && hitLeft.collider.CompareTag("Wall");
+        var right = hitRight.collider != null && hitRight.collider.CompareTag("Wall");
+        var down = hitDown.collider != null && hitDown.collider.CompareTag("Wall");
+
+        return up && left || up && right || right && down || down && left;
+    } 
+
+    #endregion
+    
     #region Public Methods
 
     /// <summary>
@@ -65,6 +87,8 @@ public class BoxControl : MonoBehaviour
     /// </summary>
     private float _distancePercentage;
 
+    private bool _onTarget;
+
     #endregion
 
     #region Monobehaviour
@@ -92,10 +116,16 @@ public class BoxControl : MonoBehaviour
         _distancePercentage = 0;
         _lastPosition += _targetDirection;
         _moving = false;
+        if (IsStuck())
+        {
+            print($"Box stuck at position{myRigidbody.position}");
+            GameManager.BoxIsStuck = true;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        _onTarget = true;
         // When a box reaches a target - mark that target as complete
         if (other.CompareTag("Target")) 
             GameManager.TargetCounter--;
@@ -103,6 +133,7 @@ public class BoxControl : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
+        _onTarget = false;
         // When a box leaves a target - mark that target as not complete
         if (other.CompareTag("Target")) 
             GameManager.TargetCounter++;

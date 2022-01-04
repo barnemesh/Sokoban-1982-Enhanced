@@ -47,9 +47,11 @@ public class AvatarsControl : MonoBehaviour
     private void Start()
     {
         GameManager.AvatarController = this;
-
-        statePanel.CreateAvatars();
-        statePanel.Indicate(_currentPlayer);
+        if (statePanel.isActiveAndEnabled)
+        {
+            statePanel.CreateAvatars();
+            statePanel.Indicate(_currentPlayer);
+        }
         
         GameManager.PlayerList[_currentPlayer].SetActiveAnimation(true);
     }

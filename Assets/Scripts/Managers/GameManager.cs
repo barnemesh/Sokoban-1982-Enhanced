@@ -16,7 +16,7 @@ public static class GameManager
     private static int _currentLevel;
     private static int _movesInLevel;
     private static int _inDoor;
-    
+
     private static TextMeshProUGUI _scoreText;
     private static TextMeshProUGUI _messagesText;
     private static UITexts _uiTexts;
@@ -108,6 +108,8 @@ public static class GameManager
     /// </summary>
     public static List<PlayerControl> PlayerList { get; } = new List<PlayerControl>();
 
+    public static bool BoxIsStuck { get; set; }
+
     #endregion
 
     #region Setter Methods
@@ -143,6 +145,7 @@ public static class GameManager
         _resets = levelNumber == _currentLevel ? _resets + 1 : 0;
         _currentLevel = levelNumber;
         LevelWon = false;
+        BoxIsStuck = false;
         UpdateScore();
         
         if (Scores == null) 
@@ -155,17 +158,24 @@ public static class GameManager
     #region Manager Methods
 
     /// <summary>
-    ///     Load the next scene based on current level status.
+    ///     Load the scene given by number.
     /// </summary>
-    public static void SwitchToTargetScene()
+    public static void SwitchToSceneByNumber(int targetScene)
     {
         DeactivateText();
-        var targetScene = GetTargetScene();
         PlayerList.Clear();
         _inDoor = 0;
         TargetCounter = 0;
         _movesInLevel = 0;
         SceneManager.LoadScene(targetScene);
+    }
+    
+    /// <summary>
+    ///     Load the next scene based on current level status.
+    /// </summary>
+    public static void SwitchToTargetScene()
+    {
+        SwitchToSceneByNumber(GetTargetScene());
     }
 
     /// <summary>
@@ -176,8 +186,10 @@ public static class GameManager
         DeactivateText();
         if (DoorCounter == PlayerList.Count)
             _messagesText.text = _uiTexts.winText;
+        else if (_resets >= MaxResets)
+            _messagesText.text = _uiTexts.loseText;
         else
-            _messagesText.text = _resets >= MaxResets ? _uiTexts.loseText : _uiTexts.resetText;
+            _messagesText.text = BoxIsStuck ? _uiTexts.boxStuckText : _uiTexts.resetText;
     }
 
     /// <summary>

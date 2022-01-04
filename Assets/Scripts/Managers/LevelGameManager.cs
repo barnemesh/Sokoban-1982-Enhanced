@@ -50,7 +50,7 @@ public class LevelGameManager : MonoBehaviour
     private void Update()
     {
         // Use f1 to do stuff.
-        if (!_waitingForInput && (Input.GetKeyDown(KeyCode.F1) || GameManager.LevelWon))
+        if (!_waitingForInput && (Input.GetKeyDown(KeyCode.F1) || GameManager.LevelWon || GameManager.BoxIsStuck))
         {
             _waitingForInput = true;
             GameManager.TogglePlayerMovement();
@@ -58,17 +58,24 @@ public class LevelGameManager : MonoBehaviour
         }
 
         // if already waiting for input, check if there is input.
-        if (!_waitingForInput) return;
+        if (!_waitingForInput) 
+            return;
+        
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Application.Quit();
             GameManager.SaveScores();
         }
+        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            GameManager.SwitchToSceneByNumber(0);
+        }
 
         if (Input.GetKeyDown(KeyCode.Y))
             GameManager.SwitchToTargetScene();
 
-        if (Input.GetKeyDown(KeyCode.N) && !GameManager.LevelWon)
+        if (Input.GetKeyDown(KeyCode.N) && !(GameManager.LevelWon || GameManager.BoxIsStuck))
         {
             _waitingForInput = false;
             GameManager.TogglePlayerMovement();

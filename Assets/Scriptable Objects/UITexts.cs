@@ -19,10 +19,14 @@ namespace Scriptable_Objects
         [TextArea]
         [Tooltip("Text to display when trying to reset level.")]
         public string resetText;
+        
+        [TextArea]
+        [Tooltip("Text to display when a box is stuck.")]
+        public string boxStuckText;
 
         [TextArea]
         [Tooltip("Format to use to display moves and resets. must have format space for moves and for resets.")]
         public string scoreFormat;
-        // todo: add highscore gained text.
+        
     }
 }
