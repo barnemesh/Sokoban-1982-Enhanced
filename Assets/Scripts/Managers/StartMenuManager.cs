@@ -1,5 +1,6 @@
 using System.IO;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 /**
  * Main menu runner.
@@ -10,14 +11,13 @@ public class StartMenuManager : MonoBehaviour
     {
         GameManager.SetLevel(0);
         GameManager.LoadScores();
-        
     }
 
     // Update is called once per frame
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
-            GameManager.SwitchToTargetScene();
+            GameManager.SwitchToSceneByNumber(SceneManager.sceneCountInBuildSettings - 1);
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
