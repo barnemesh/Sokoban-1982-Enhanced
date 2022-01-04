@@ -1,11 +1,11 @@
-﻿using System.IO;
-using UnityEngine;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Manages loading and saving HighScores
+///     Manages loading and saving HighScores
 /// </summary>
 public static class HighScoreManager
 {
@@ -19,32 +19,32 @@ public static class HighScoreManager
     #region Public Methods
 
     /// <summary>
-    /// Save the current HighScores to file.
+    ///     Save the current HighScores to file.
     /// </summary>
     public static void SaveScores()
     {
-        if (GameManager.Scores == null) 
+        if (GameManager.Scores == null)
             return;
         File.WriteAllText(Application.persistentDataPath + SaveFileName, JsonUtility.ToJson(GameManager.Scores));
         Debug.Log(JsonUtility.ToJson(GameManager.Scores));
 
         Debug.Log("Game Saved");
     }
-    
+
     /// <summary>
-    /// Load HighScores from file - if exists, or create new HighScores object.
+    ///     Load HighScores from file - if exists, or create new HighScores object.
     /// </summary>
     public static void LoadScores()
-    { 
+    {
         if (File.Exists(Application.persistentDataPath + SaveFileName))
         {
-            StreamReader reader = new StreamReader(Application.persistentDataPath + SaveFileName);
-            string json = reader.ReadToEnd();
+            var reader = new StreamReader(Application.persistentDataPath + SaveFileName);
+            var json = reader.ReadToEnd();
 
             var scores = JsonUtility.FromJson<HighScores>(json);
             GameManager.Scores = scores;
             scores.entries.Sort(HighScoreEntry.HighScoreCompare);
-            
+
             Debug.Log("Scores Loaded");
             Debug.Log(scores);
         }
@@ -53,7 +53,6 @@ public static class HighScoreManager
             GameManager.Scores = new HighScores();
             GameManager.Scores.entries.Add(new HighScoreEntry(0, -1));
             Debug.Log("Scores Created");
-
         }
     }
 
@@ -61,7 +60,7 @@ public static class HighScoreManager
 }
 
 /// <summary>
-/// Serializable object that hold the highscores.
+///     Serializable object that hold the highscores.
 /// </summary>
 [Serializable]
 public class HighScores
@@ -70,14 +69,14 @@ public class HighScores
     public int levelCount = SceneManager.sceneCountInBuildSettings;
     public List<HighScoreEntry> entries = new List<HighScoreEntry>(SceneManager.sceneCountInBuildSettings);
 
-    public override string ToString ()
+    public override string ToString()
     {
         return $"{levelCount} levels saved:\n{string.Join("\n", entries)}";
     }
 }
 
 /// <summary>
-/// Hold highscore for a single level
+///     Hold highscore for a single level
 /// </summary>
 [Serializable]
 public class HighScoreEntry
@@ -92,6 +91,7 @@ public class HighScoreEntry
         this.moves = moves;
         this.name = name;
     }
+
     public override string ToString()
     {
         return $"# Best in level {level}: {moves} moves by {name}";

@@ -1,13 +1,22 @@
-using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 /// <summary>
-/// Manage opening and closing doors in a Tilemap
+///     Manage opening and closing doors in a Tilemap
 /// </summary>
 public class DoorController : MonoBehaviour
 {
+    #region Private Method
+
+    /// <summary>
+    /// </summary>
+    private void HandleExitWhenDisablingTrigger()
+    {
+        GameManager.DoorCounter += _tilemapCollider.isTrigger ? _playerOnSelf : -_playerOnSelf;
+    }
+
+    #endregion
+
     #region Inspector
 
     [SerializeField]
@@ -21,7 +30,6 @@ public class DoorController : MonoBehaviour
     [SerializeField]
     [Tooltip("Should the tiles be trigger when target condition was met?")]
     private bool triggerStateWhenActive;
-    
 
     #endregion
 
@@ -29,22 +37,21 @@ public class DoorController : MonoBehaviour
     #region Private Fields
 
     /// <summary>
-    /// Are the doors in this tilemap open?
+    ///     Are the doors in this tilemap open?
     /// </summary>
     private bool _conditionMet;
 
     /// <summary>
-    /// This objects Tilemap component.
+    ///     This objects Tilemap component.
     /// </summary>
     private Tilemap _doorsTilemap;
 
     /// <summary>
-    /// Collider of this objects Tilemap.
+    ///     Collider of this objects Tilemap.
     /// </summary>
     private TilemapCollider2D _tilemapCollider;
 
     /// <summary>
-    /// 
     /// </summary>
     private int _playerOnSelf;
 
@@ -54,7 +61,7 @@ public class DoorController : MonoBehaviour
     #region MonoBehaviour
 
     // Start is called before the first frame update
-    private void Start ()
+    private void Start()
     {
         _doorsTilemap = GetComponent<Tilemap>();
         _tilemapCollider = _doorsTilemap.GetComponent<TilemapCollider2D>();
@@ -63,9 +70,9 @@ public class DoorController : MonoBehaviour
     }
 
     // Update is called once per frame
-    private void Update ()
+    private void Update()
     {
-        if ( !_conditionMet && GameManager.TargetCounter == 0 )
+        if (!_conditionMet && GameManager.TargetCounter == 0)
         {
             _conditionMet = true;
             _doorsTilemap.SwapTile(tileWhenInactive, tileWhenActive);
@@ -74,7 +81,7 @@ public class DoorController : MonoBehaviour
             HandleExitWhenDisablingTrigger();
         }
 
-        if ( _conditionMet && GameManager.TargetCounter > 0 )
+        if (_conditionMet && GameManager.TargetCounter > 0)
         {
             _conditionMet = false;
             _doorsTilemap.SwapTile(tileWhenActive, tileWhenInactive);
@@ -86,50 +93,32 @@ public class DoorController : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D other)
     {
-        if ( other.collider.CompareTag("Player") )
-        {
-            _playerOnSelf--;
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if ( other.collider.CompareTag("Player") )
-        {
-            _playerOnSelf++;
-        }
+        if (other.collider.CompareTag("Player")) _playerOnSelf--;
     }
 
-    private void OnTriggerEnter2D (Collider2D other)
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if (other.collider.CompareTag("Player")) _playerOnSelf++;
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
         // When an avatar reaches a door - mark that door as entered
-        if ( other.CompareTag("Player") )
+        if (other.CompareTag("Player"))
         {
             GameManager.DoorCounter++;
             _playerOnSelf++;
         }
     }
 
-    private void OnTriggerExit2D (Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         // When an avatar leaves a door - mark that door as empty
-        if ( other.CompareTag("Player") )
+        if (other.CompareTag("Player"))
         {
             GameManager.DoorCounter--;
             _playerOnSelf--;
         }
-    }
-
-    #endregion
-
-
-    #region Private Method
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private void HandleExitWhenDisablingTrigger ()
-    {
-        GameManager.DoorCounter += _tilemapCollider.isTrigger ? _playerOnSelf : -_playerOnSelf;
     }
 
     #endregion

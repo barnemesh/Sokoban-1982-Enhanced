@@ -9,9 +9,8 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public static class GameManager
 {
-
     #region Private Variables
-    
+
     private static int _resets;
     private static int _currentLevel;
     private static int _movesInLevel;
@@ -29,16 +28,16 @@ public static class GameManager
     private const int MaxResets = 4;
 
     #endregion
-    
+
     #region Properties
 
     /// <summary>
-    /// Name the current player set for high-scores.
+    ///     Name the current player set for high-scores.
     /// </summary>
     public static string UserName { get; set; }
 
     /// <summary>
-    /// The HighScores loaded for this play.
+    ///     The HighScores loaded for this play.
     /// </summary>
     public static HighScores Scores
     {
@@ -47,7 +46,7 @@ public static class GameManager
     }
 
     /// <summary>
-    /// Indicate if the current level is complete.
+    ///     Indicate if the current level is complete.
     /// </summary>
     public static bool LevelWon { get; private set; }
 
@@ -66,7 +65,7 @@ public static class GameManager
     }
 
     /// <summary>
-    /// Count the number of doors that have avatars in them. When all avatars are in doors, the level is won.
+    ///     Count the number of doors that have avatars in them. When all avatars are in doors, the level is won.
     /// </summary>
     public static int DoorCounter
     {
@@ -104,7 +103,7 @@ public static class GameManager
     public static AvatarsControl AvatarController { get; set; }
 
     /// <summary>
-    /// List of all active Avatars in the level.
+    ///     List of all active Avatars in the level.
     /// </summary>
     public static List<PlayerControl> PlayerList { get; } = new List<PlayerControl>();
 
@@ -147,8 +146,8 @@ public static class GameManager
         LevelWon = false;
         BoxIsStuck = false;
         UpdateScore();
-        
-        if (Scores == null) 
+
+        if (Scores == null)
             return;
         Debug.Log(Scores.entries.Find(x => x.level == _currentLevel));
     }
@@ -169,7 +168,7 @@ public static class GameManager
         _movesInLevel = 0;
         SceneManager.LoadScene(targetScene);
     }
-    
+
     /// <summary>
     ///     Load the next scene based on current level status.
     /// </summary>
@@ -197,28 +196,28 @@ public static class GameManager
     /// </summary>
     public static void DeactivateText()
     {
-        if (_messagesText != null) 
+        if (_messagesText != null)
             _messagesText.text = "";
     }
 
     /// <summary>
-    /// Load scores from file.
+    ///     Load scores from file.
     /// </summary>
-    public static void LoadScores ()
+    public static void LoadScores()
     {
         HighScoreManager.LoadScores();
     }
-    
+
     /// <summary>
-    /// Save scores to file.
+    ///     Save scores to file.
     /// </summary>
-    public static void SaveScores ()
+    public static void SaveScores()
     {
         HighScoreManager.SaveScores();
     }
-    
+
     #endregion
-    
+
     #region Private Helper Methods
 
     /// <summary>
@@ -238,14 +237,12 @@ public static class GameManager
     /// </summary>
     private static void UpdateScore()
     {
-        if (_scoreText == null) 
+        if (_scoreText == null)
             return;
         _scoreText.text = string.Format(_uiTexts.scoreFormat, _movesInLevel, MaxResets - _resets);
         if (Scores != null)
-        {
             // todo: null check?
             _scoreText.text += "\t" + Scores.entries.Find(x => x.level == _currentLevel);
-        }
     }
 
     #endregion

@@ -3,10 +3,28 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Manager for the level chooser scene
+///     Manager for the level chooser scene
 /// </summary>
 public class LevelIndicator : MonoBehaviour
 {
+    #region Private Methods
+
+    /// <summary>
+    ///     Indicate new item
+    /// </summary>
+    /// <param name="i"> index of new item to indicate</param>
+    private void Indicate(int i)
+    {
+        if (_indicators.Count == 0)
+            return;
+
+        _indicators[_index].Marked = false;
+        _index = i % _indicators.Count;
+        _indicators[_index].Marked = true;
+    }
+
+    #endregion
+
     #region Inspector
 
     [SerializeField]
@@ -26,12 +44,12 @@ public class LevelIndicator : MonoBehaviour
     #region Private Fields
 
     /// <summary>
-    /// List of all indicators
+    ///     List of all indicators
     /// </summary>
     private readonly List<MarkerControl> _indicators = new List<MarkerControl>();
 
     /// <summary>
-    /// Currently chosen item
+    ///     Currently chosen item
     /// </summary>
     private int _index;
 
@@ -68,33 +86,12 @@ public class LevelIndicator : MonoBehaviour
             GameManager.SaveScores();
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            GameManager.SwitchToSceneByNumber(_index);
-        }
+        if (Input.GetKeyDown(KeyCode.Space)) GameManager.SwitchToSceneByNumber(_index);
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
             Indicate(_index - 1);
         if (Input.GetKeyDown(KeyCode.DownArrow))
             Indicate(_index + 1);
-    }
-
-    #endregion
-
-    #region Private Methods
-
-    /// <summary>
-    /// Indicate new item
-    /// </summary>
-    /// <param name="i"> index of new item to indicate</param>
-    private void Indicate(int i)
-    {
-        if (_indicators.Count == 0)
-            return;
-
-        _indicators[_index].Marked = false;
-        _index = i % _indicators.Count;
-        _indicators[_index].Marked = true;
     }
 
     #endregion

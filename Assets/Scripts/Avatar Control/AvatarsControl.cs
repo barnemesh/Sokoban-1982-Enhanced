@@ -1,10 +1,18 @@
 using UnityEngine;
 
 /// <summary>
-/// Controller for all avatars in the level.
+///     Controller for all avatars in the level.
 /// </summary>
 public class AvatarsControl : MonoBehaviour
 {
+    #region Inspector
+
+    [SerializeField]
+    [Tooltip("Panel that hold the indicators for active avatars.")]
+    private IndicatorControl statePanel;
+
+    #endregion
+
     #region Properties
 
     /**
@@ -15,27 +23,20 @@ public class AvatarsControl : MonoBehaviour
     #endregion
 
 
-    #region Inspector
-
-    [SerializeField]
-    [Tooltip("Panel that hold the indicators for active avatars.")]
-    private IndicatorControl statePanel;
-
-    #endregion
-
-
     #region Private Fields
 
     /// <summary>
-    /// Current player index in the GameManager list.
+    ///     Current player index in the GameManager list.
     /// </summary>
     private int _currentPlayer;
+
     /// <summary>
-    /// Is the active avatar moving?
+    ///     Is the active avatar moving?
     /// </summary>
     private bool _moving;
+
     /// <summary>
-    /// Target direction to move to.
+    ///     Target direction to move to.
     /// </summary>
     private Vector2 _targetDirection;
 
@@ -52,7 +53,7 @@ public class AvatarsControl : MonoBehaviour
             statePanel.CreateAvatars();
             statePanel.Indicate(_currentPlayer);
         }
-        
+
         GameManager.PlayerList[_currentPlayer].SetActiveAnimation(true);
     }
 
@@ -60,7 +61,7 @@ public class AvatarsControl : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (Pause || _moving) 
+        if (Pause || _moving)
             return;
 
         if (Input.GetKeyDown(KeyCode.Space))

@@ -3,10 +3,17 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Controller for UI item that marks levels in the level choosing scene 
+///     Controller for UI item that marks levels in the level choosing scene
 /// </summary>
 public class MarkerControl : MonoBehaviour
 {
+    // Start is called before the first frame update
+    private void Awake()
+    {
+        _text = GetComponentInChildren<TextMeshProUGUI>();
+        _image = GetComponentInChildren<Image>();
+    }
+
     #region Inspector
 
     [SerializeField]
@@ -22,33 +29,26 @@ public class MarkerControl : MonoBehaviour
     #region Private Fields
 
     /// <summary>
-    /// Text this items presents
+    ///     Text this items presents
     /// </summary>
     private TextMeshProUGUI _text;
 
     /// <summary>
-    /// Image indicating the current item
+    ///     Image indicating the current item
     /// </summary>
     private Image _image;
 
     /// <summary>
-    /// is this item currently marked?
+    ///     is this item currently marked?
     /// </summary>
     private bool _marked;
 
     #endregion
 
-    // Start is called before the first frame update
-    void Awake()
-    {
-        _text = GetComponentInChildren<TextMeshProUGUI>();
-        _image = GetComponentInChildren<Image>();
-    }
-
     #region Properties
 
     /// <summary>
-    /// Is this item currently marked?
+    ///     Is this item currently marked?
     /// </summary>
     public bool Marked
     {
@@ -60,7 +60,7 @@ public class MarkerControl : MonoBehaviour
     }
 
     /// <summary>
-    /// The text this items shows.
+    ///     The text this items shows.
     /// </summary>
     public string Text
     {

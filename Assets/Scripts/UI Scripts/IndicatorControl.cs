@@ -3,13 +3,13 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Control a UI element that indicates current chosen avatar.
+///     Control a UI element that indicates current chosen avatar.
 /// </summary>
 public class IndicatorControl : MonoBehaviour
 {
     #region Static Constants
 
-    private static readonly int Empty =  Animator.StringToHash("Empty");
+    private static readonly int Empty = Animator.StringToHash("Empty");
 
     #endregion
 
@@ -24,12 +24,12 @@ public class IndicatorControl : MonoBehaviour
     #region Private Fields
 
     /// <summary>
-    /// List of the avatar indicators in this level.
+    ///     List of the avatar indicators in this level.
     /// </summary>
     private readonly List<GameObject> _indicators = new List<GameObject>();
 
     /// <summary>
-    /// Currently active avatar index.
+    ///     Currently active avatar index.
     /// </summary>
     private int _index;
 
@@ -38,37 +38,35 @@ public class IndicatorControl : MonoBehaviour
     #region Public Methods
 
     /// <summary>
-    /// Initialize avatars images
+    ///     Initialize avatars images
     /// </summary>
     public void CreateAvatars()
     {
         if (avatarMarker != null)
-        {
             for (var i = 0; i < GameManager.PlayerList.Count; i++)
             {
                 var item = Instantiate(avatarMarker, transform);
                 item.GetComponentInChildren<Animator>().SetBool(Empty, false);
                 _indicators.Add(item);
             }
-        }
 
         _index = 0;
-        if (_indicators.Count == 0) 
+        if (_indicators.Count == 0)
             return;
-        
+
         _indicators[0].GetComponent<Image>().enabled = true;
         _indicators[0].GetComponentInChildren<Animator>().SetBool(Empty, true);
     }
 
     /// <summary>
-    /// Switch active image to image #i
+    ///     Switch active image to image #i
     /// </summary>
     /// <param name="i">index of the player to indicate</param>
     public void Indicate(int i)
     {
-        if (_indicators.Count == 0) 
+        if (_indicators.Count == 0)
             return;
-        
+
         _indicators[_index].GetComponent<Image>().enabled = false;
         _indicators[_index].GetComponentInChildren<Animator>().SetBool(Empty, false);
         _index = i % _indicators.Count;
@@ -77,5 +75,4 @@ public class IndicatorControl : MonoBehaviour
     }
 
     #endregion
-    
 }

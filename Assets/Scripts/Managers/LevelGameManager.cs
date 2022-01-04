@@ -3,14 +3,14 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Manager of a single level in the game.
+///     Manager of a single level in the game.
 /// </summary>
 public class LevelGameManager : MonoBehaviour
 {
     #region Private Fields
 
     /// <summary>
-    /// Is the game waiting for input?
+    ///     Is the game waiting for input?
     /// </summary>
     private bool _waitingForInput;
 
@@ -21,7 +21,7 @@ public class LevelGameManager : MonoBehaviour
     [SerializeField]
     [Tooltip("UITexts objects that hold the texts and formats for this level.")]
     private UITexts texts;
-    
+
     [SerializeField]
     [Tooltip("Text to show score")]
     private TextMeshProUGUI scoreText;
@@ -58,19 +58,16 @@ public class LevelGameManager : MonoBehaviour
         }
 
         // if already waiting for input, check if there is input.
-        if (!_waitingForInput) 
+        if (!_waitingForInput)
             return;
-        
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             Application.Quit();
             GameManager.SaveScores();
         }
-        
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            GameManager.SwitchToSceneByNumber(0);
-        }
+
+        if (Input.GetKeyDown(KeyCode.Y)) GameManager.SwitchToSceneByNumber(0);
 
         if (Input.GetKeyDown(KeyCode.Space))
             GameManager.SwitchToTargetScene();

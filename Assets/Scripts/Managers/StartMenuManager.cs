@@ -30,5 +30,4 @@ public class StartMenuManager : MonoBehaviour
         GameManager.UserName = test.ToUpper();
         print(GameManager.UserName);
     }
-    
 }

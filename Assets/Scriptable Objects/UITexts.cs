@@ -3,7 +3,7 @@ using UnityEngine;
 namespace Scriptable_Objects
 {
     /// <summary>
-    /// Hold texts and formats for levels.
+    ///     Hold texts and formats for levels.
     /// </summary>
     [CreateAssetMenu]
     public class UITexts : ScriptableObject
@@ -19,7 +19,7 @@ namespace Scriptable_Objects
         [TextArea]
         [Tooltip("Text to display when trying to reset level.")]
         public string resetText;
-        
+
         [TextArea]
         [Tooltip("Text to display when a box is stuck.")]
         public string boxStuckText;
@@ -27,6 +27,5 @@ namespace Scriptable_Objects
         [TextArea]
         [Tooltip("Format to use to display moves and resets. must have format space for moves and for resets.")]
         public string scoreFormat;
-        
     }
 }
