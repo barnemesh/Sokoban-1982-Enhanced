@@ -74,9 +74,8 @@ public static class GameManager
         {
             _inDoor = value;
             LevelWon = _inDoor == PlayerList.Count;
-            if (LevelWon && Scores != null)
+            if (LevelWon && MoveCounter != 0 && Scores != null)
             {
-                // todo: find
                 var i = Scores.entries.FindIndex(x => x.level == _currentLevel);
                 if (i == -1)
                 {
@@ -204,6 +203,8 @@ public static class GameManager
     /// </summary>
     public static void LoadScores()
     {
+        if (Scores != null)
+            SaveScores();
         HighScoreManager.LoadScores();
     }
 
@@ -240,7 +241,6 @@ public static class GameManager
             return;
         _scoreText.text = string.Format(_uiTexts.scoreFormat, _movesInLevel, MaxResets - _resets);
         if (Scores != null)
-            // todo: null check?
             _scoreText.text += "\t" + Scores.entries.Find(x => x.level == _currentLevel);
     }
 

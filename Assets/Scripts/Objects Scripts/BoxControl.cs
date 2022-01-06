@@ -10,6 +10,10 @@ public class BoxControl : MonoBehaviour
 {
     #region Private Methods
 
+    /// <summary>
+    ///     Check some conditions that determine if the Box is stuck, and can no longer reach a target.
+    /// </summary>
+    /// <returns> True if the box is not on target, and can no longer be moved. O.W False.</returns>
     private bool IsStuck()
     {
         if (_onTarget)
@@ -86,7 +90,10 @@ public class BoxControl : MonoBehaviour
     ///     Percentage of movement complete.
     /// </summary>
     private float _distancePercentage;
-
+    
+    /// <summary>
+    ///     Is this box currently on a Target Tile?
+    /// </summary>
     private bool _onTarget;
 
     #endregion
@@ -95,6 +102,11 @@ public class BoxControl : MonoBehaviour
 
     private void Start()
     {
+        if (myRigidbody == null)
+        {
+            myRigidbody = GetComponent<Rigidbody2D>();
+        }
+
         _lastPosition = myRigidbody.position;
         GameManager.TargetCounter++;
     }

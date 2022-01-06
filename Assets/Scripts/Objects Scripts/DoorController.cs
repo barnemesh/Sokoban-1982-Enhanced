@@ -9,6 +9,7 @@ public class DoorController : MonoBehaviour
     #region Private Method
 
     /// <summary>
+    ///     Change count of players on the doors when toggling the Trigger of the collider.
     /// </summary>
     private void HandleExitWhenDisablingTrigger()
     {

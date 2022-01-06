@@ -149,6 +149,15 @@ public class PlayerControl : MonoBehaviour
         _lastPosition = myRigidbody.position;
         GameManager.PlayerList.Add(this); // register this player as active
         SetActiveAnimation(false);
+        if (animator == null)
+        {
+            animator = GetComponent<Animator>();
+        }
+
+        if (myRigidbody == null)
+        {
+            myRigidbody = GetComponent<Rigidbody2D>();
+        }
     }
 
     private void FixedUpdate()

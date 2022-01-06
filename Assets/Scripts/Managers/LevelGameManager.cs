@@ -31,7 +31,6 @@ public class LevelGameManager : MonoBehaviour
     [Tooltip("Text to show any message to user.")]
     private TextMeshProUGUI messagesText;
 
-    // TODO: Use scene number instead?
     [SerializeField]
     [Tooltip("This level number.")]
     private int levelNumber;

@@ -3,12 +3,15 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
+///     UNUSED IN FINAL SUBMIT.
 ///     Control a UI element that indicates current chosen avatar.
 /// </summary>
 public class IndicatorControl : MonoBehaviour
 {
     #region Static Constants
-
+    /// <summary>
+    ///     Hash to activate the avatar images animator.
+    /// </summary>
     private static readonly int Empty = Animator.StringToHash("Empty");
 
     #endregion

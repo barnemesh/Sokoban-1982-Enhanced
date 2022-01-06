@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
  */
 public class StartMenuManager : MonoBehaviour
 {
+    #region MonoBehaviour
+
     private void Start()
     {
         GameManager.SetLevel(0);
@@ -25,9 +27,15 @@ public class StartMenuManager : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Public Methods
+
     public void GetName(string test)
     {
         GameManager.UserName = test.ToUpper();
         print(GameManager.UserName);
     }
+
+    #endregion
 }

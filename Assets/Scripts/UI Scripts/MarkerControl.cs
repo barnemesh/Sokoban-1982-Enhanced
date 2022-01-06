@@ -7,12 +7,16 @@ using UnityEngine.UI;
 /// </summary>
 public class MarkerControl : MonoBehaviour
 {
+    #region MonoBehaviour
+
     // Start is called before the first frame update
     private void Awake()
     {
         _text = GetComponentInChildren<TextMeshProUGUI>();
         _image = GetComponentInChildren<Image>();
     }
+
+    #endregion
 
     #region Inspector
 

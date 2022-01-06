@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public static class HighScoreManager
 {
     #region Constatnts
+
     /// <summary>
     ///     Save file name
     /// </summary>
@@ -71,6 +72,7 @@ public class HighScores
     ///     Number of levels in last save
     /// </summary>
     public int levelCount = SceneManager.sceneCountInBuildSettings;
+
     /// <summary>
     ///     List of the scores themselves.
     /// </summary>
@@ -92,10 +94,12 @@ public class HighScoreEntry
     ///     Level the score is for
     /// </summary>
     public int level;
+
     /// <summary>
     ///     Name of the high-scorer
     /// </summary>
     public string name;
+
     /// <summary>
     ///     Moves in the high score
     /// </summary>
