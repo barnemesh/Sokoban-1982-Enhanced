@@ -310,7 +310,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 32
+  m_fontSize: 31.95
   m_fontSizeBase: 14
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -968,15 +968,16 @@ MonoBehaviour:
   m_text: "<align=\"center\"><color=red>* *  S O K O B A N  - U P G R A D E * *</color>\n\n<align=\"justified\"><color=#00FFFF>Your
     job is to push all the <sprite name=Box>s to the <sprite name=Target>s. Please
     try your best. However, since the <sprite name=Box>s are large, you can only
-    push them one by one. If you do poorly, the <sprite name=Box> will get stuck!
-    When you finish, the <sprite name=Door closed>s to the next warehouse will <sprite
-    name=Door open>. Be careful -  you have limited number of attempts.</color>\n\n<align=\"center\"><color=purple>\u2191
-    Key (up) \n|\n\u2190 Key \u2014 \u2193 Key \u2014 \u2192Key\n    (Left)   (down)   
-    (Right)  \n\n[Space] Key to switch characters</color>\n<align=\"flush\">\n|When
-    you fail or want to reset the job press the<color=red> F\u20221 key</color>.|\n|If
-    you want to save you scores, press <color=red>F\u20221 key</color>,|\n|and then
-    pressing [Q] will save highscores.|\n<align=\"center\"><color=yellow>Enter your
-    name below and press [Space] to start !\n\n"
+    push them one by one. If you do poorly, the <sprite name=Box> will get stuck,
+    and you will fail! When you finish, the <sprite name=Door closed>s to the next
+    warehouse will <sprite name=Door open>. Be careful -  you have limited number
+    of attempts.</color>\n\n<align=\"center\"><color=purple>\u2191 Key (up) \n|\n\u2190
+    Key \u2014 \u2193 Key \u2014 \u2192Key\n    (Left)   (down)    (Right)  \n\n[Space]
+    Key to switch characters</color>\n<align=\"flush\">\n|When you fail or want to
+    reset the job press the<color=red> F\u20221 key</color>.|\n|If you want to save
+    you scores, press <color=red>F\u20221 key</color>,|\n|and then pressing [Q] will
+    save highscores.|\n<align=\"center\"><color=yellow>Enter your name below and
+    press [Space] to start !\n\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c54aeea6c53137049b3c679d4375c777, type: 2}
   m_sharedMaterial: {fileID: -3777889342290687585, guid: c54aeea6c53137049b3c679d4375c777, type: 2}

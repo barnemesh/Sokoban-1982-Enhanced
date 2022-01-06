@@ -1,8 +1,6 @@
 # Physics 2D Raycaster
 
-The 2D Raycaster raycasts against 2D objects in the scene. This allows messages to be sent to 2D physics objects that
-implement event interfaces. The Camera GameObject needs to be used and will be added to the GameObject if the Physics 3D
-Raycaster is not added to the Camera GameObject.
+The 2D Raycaster raycasts against 2D objects in the scene. This allows messages to be sent to 2D physics objects that implement event interfaces.  The Camera GameObject needs to be used and will be added to the GameObject if the Physics 3D Raycaster is not added to the Camera GameObject.
 
 For more Raycaster information see [Raycasters](Raycasters.md).
 
