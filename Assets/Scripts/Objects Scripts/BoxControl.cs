@@ -116,11 +116,9 @@ public class BoxControl : MonoBehaviour
         _distancePercentage = 0;
         _lastPosition += _targetDirection;
         _moving = false;
-        if (IsStuck())
-        {
-            print($"Box stuck at position{myRigidbody.position}");
-            GameManager.BoxIsStuck = true;
-        }
+        if (!IsStuck())
+            return;
+        GameManager.BoxIsStuck = true;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

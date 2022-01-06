@@ -10,7 +10,9 @@ using UnityEngine.SceneManagement;
 public static class HighScoreManager
 {
     #region Constatnts
-
+    /// <summary>
+    ///     Save file name
+    /// </summary>
     private const string SaveFileName = "/highscores.json";
 
     #endregion
@@ -60,13 +62,18 @@ public static class HighScoreManager
 }
 
 /// <summary>
-///     Serializable object that hold the highscores.
+///     Serializable object that hold the high scores.
 /// </summary>
 [Serializable]
 public class HighScores
 {
-    // todo: list size? cant use dict for some reason...
+    /// <summary>
+    ///     Number of levels in last save
+    /// </summary>
     public int levelCount = SceneManager.sceneCountInBuildSettings;
+    /// <summary>
+    ///     List of the scores themselves.
+    /// </summary>
     public List<HighScoreEntry> entries = new List<HighScoreEntry>(SceneManager.sceneCountInBuildSettings);
 
     public override string ToString()
@@ -76,15 +83,27 @@ public class HighScores
 }
 
 /// <summary>
-///     Hold highscore for a single level
+///     Hold high score for a single level
 /// </summary>
 [Serializable]
 public class HighScoreEntry
 {
+    /// <summary>
+    ///     Level the score is for
+    /// </summary>
     public int level;
+    /// <summary>
+    ///     Name of the high-scorer
+    /// </summary>
     public string name;
+    /// <summary>
+    ///     Moves in the high score
+    /// </summary>
     public int moves;
 
+    /// <summary>
+    ///     Constructor
+    /// </summary>
     public HighScoreEntry(int level, int moves, string name = "")
     {
         this.level = level;

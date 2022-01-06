@@ -104,21 +104,19 @@ public class DoorController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // When an avatar reaches a door - mark that door as entered
-        if (other.CompareTag("Player"))
-        {
-            GameManager.DoorCounter++;
-            _playerOnSelf++;
-        }
+        if (!other.CompareTag("Player"))
+            return;
+        GameManager.DoorCounter++;
+        _playerOnSelf++;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         // When an avatar leaves a door - mark that door as empty
-        if (other.CompareTag("Player"))
-        {
-            GameManager.DoorCounter--;
-            _playerOnSelf--;
-        }
+        if (!other.CompareTag("Player"))
+            return;
+        GameManager.DoorCounter--;
+        _playerOnSelf--;
     }
 
     #endregion

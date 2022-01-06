@@ -82,8 +82,8 @@ public class LevelIndicator : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Application.Quit();
             GameManager.SaveScores();
+            Application.Quit();
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) GameManager.SwitchToSceneByNumber(_index);

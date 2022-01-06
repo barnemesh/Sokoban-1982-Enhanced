@@ -63,8 +63,8 @@ public class LevelGameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Q))
         {
-            Application.Quit();
             GameManager.SaveScores();
+            Application.Quit();
         }
 
         if (Input.GetKeyDown(KeyCode.Y)) GameManager.SwitchToSceneByNumber(0);

@@ -74,7 +74,6 @@ public static class GameManager
         {
             _inDoor = value;
             LevelWon = _inDoor == PlayerList.Count;
-            Debug.Log($"{LevelWon},{_inDoor},{PlayerList.Count}");
             if (LevelWon && Scores != null)
             {
                 // todo: find
