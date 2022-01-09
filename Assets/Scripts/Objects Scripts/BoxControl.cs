@@ -92,7 +92,7 @@ public class BoxControl : MonoBehaviour
     private float _distancePercentage;
     
     /// <summary>
-    ///     Is this box currently on a Target Tile?
+    ///     Is this box currently on a Target Tile? 
     /// </summary>
     private bool _onTarget;
 
