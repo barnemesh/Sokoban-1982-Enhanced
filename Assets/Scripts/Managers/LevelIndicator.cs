@@ -20,6 +20,7 @@ public class LevelIndicator : MonoBehaviour
 
         _indicators[_index].Marked = false;
         _index = i % _indicators.Count;
+        _index = _index < 0 ? _index + _indicators.Count : _index; // was bug in the submition.
         _indicators[_index].Marked = true;
     }
 
